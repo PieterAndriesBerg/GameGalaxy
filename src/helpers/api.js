@@ -8,4 +8,4 @@
 
 // TODO: Get a random game
 
-// TODO: Get a game based on mood from the user. e.g. (map angry to a genre etc)
+// TODO: Get a game based on Mood from the user. e.g. (map angry to a genre etc)

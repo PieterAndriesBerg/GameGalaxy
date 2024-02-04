@@ -1,7 +1,30 @@
 .navbar {
+    width: 7rem;
+    height: 100vh;
+    background-color: #6F2232;
+    color: #B9B9B9;
+
+}
+
+.flex-container-nav {
     display: flex;
     flex-direction: column;
-    width: 5rem;
-    height: 100vh;
-    border: 2px solid red;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.flex-container a {
+    text-decoration: none;
+}
+
+.active-menu-link {
+    border-bottom: 2px solid green;
+    color: green;
+}
+
+.default-menu-link {
+    color: white;
+    border-bottom: 2px solid transparent;
 }

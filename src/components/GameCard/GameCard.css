@@ -1,0 +1,51 @@
+.gamecard-container {
+    display: flex;
+    height: 25%;
+    background-color: #6F2232;
+    border-radius: 12px;
+    color: white;
+}
+
+.gamecard-text-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px;
+}
+
+.gamecard-text-info {
+    display: flex;
+    gap: 20px;
+}
+
+.gamecard-text-info span:nth-child(1) {
+    width: 10rem;
+}
+
+.gamecard-img {
+    height: 50%;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.detail-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+    height: 100%;
+}
+
+.gamecard-top {
+    display: flex;
+    gap: 20px;
+}
+
+.gamecard-platforms {
+    margin: 0 auto;
+}
+
+.platform-icon {
+    width: 50px;
+    height: 25px;
+}

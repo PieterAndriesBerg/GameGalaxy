@@ -1,0 +1,8 @@
+.header {
+    display: flex;
+    flex-direction: row;
+}
+
+.gamegalaxy-logo {
+    width: 100%;
+}

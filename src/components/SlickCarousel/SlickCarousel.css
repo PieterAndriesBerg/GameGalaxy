@@ -1,0 +1,8 @@
+.carousel-div {
+
+}
+
+
+.slick-prev:before, .slick-next:before {
+    color: purple;
+}

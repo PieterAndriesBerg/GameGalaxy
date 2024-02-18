@@ -3,23 +3,53 @@ import Xbox from "../assets/icons/xbox.svg?react";
 import Playstation from "../assets/icons/playstation.svg?react";
 import Nintendo from "../assets/icons/nintendo-switch.svg?react";
 import Apple from "../assets/icons/apple.svg?react";
+import Linux from "../assets/icons/linux.svg?react";
 
 const platformIcons = {
   PC: <PC className="platform-icon" />,
   Xbox: <Xbox className="platform-icon" />,
   Playstation: <Playstation className="platform-icon" />,
   Nintendo: <Nintendo className="platform-icon" />,
-  Apple: <Apple className="platform-icon" />,
+  macOs: <Apple className="platform-icon" />,
+  Linux: <Linux className="platform-icon" />,
 };
 
-export const getPlatformIcon = (platformName) => {
-  if (platformName in platformIcons) {
-    return platformIcons[platformName];
-  } else {
-    return null;
-  }
-};
+export const getPlatformIcon = (platforms) => {
+  console.log("PLATFORMS", platforms);
 
-const platformName = "Playstation";
-const platformIcon = getPlatformIcon(platformName);
-console.log("icon", platformIcon);
+  let platformArray = [];
+
+  platforms.map((platform) => {
+    switch (platform.platform.name) {
+      case "PC":
+        !platformArray.includes("PC") && platformArray.push("PC");
+        break;
+      case "Xbox":
+      case "Xbox Series S/X":
+      case "Xbox One":
+      case "Xbox 360":
+        !platformArray.includes("Xbox") && platformArray.push("Xbox");
+        break;
+      case "Nintendo Switch":
+        !platformArray.includes("Nintendo") && platformArray.push("Nintendo");
+        break;
+      case "PlayStation":
+      case "PlayStation 2":
+      case "PlayStation 3":
+      case "PlayStation 4":
+      case "PlayStation 5":
+        !platformArray.includes("Playstation") &&
+          platformArray.push("Playstation");
+        break;
+      case "Linux":
+        !platformArray.includes("Linux") && platformArray.push("Linux");
+        break;
+      case "macOs":
+      case "Apple":
+        !platformArray.includes("macOs") && platformArray.push("macOs");
+    }
+    console.log("PLATFORM---ARRAY!!!!!", platformArray);
+  });
+
+  return platformArray.map((platformName) => platformIcons[platformName]);
+};

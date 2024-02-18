@@ -2,3 +2,10 @@
     color: purple;
 }
 
+.slick-list {
+    border-radius: 12px;
+}
+
+.slick-slide {
+    border-radius: 12px;
+}

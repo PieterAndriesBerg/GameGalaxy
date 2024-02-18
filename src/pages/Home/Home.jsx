@@ -30,9 +30,19 @@ const Home = () => {
 
         <div className="flex-container-column">
           <Header />
-          <SlickCarousel games={popularGames} className="game-slider" />
-          <SlickCarousel games={popularGames} className="game-slider" />
-          <SlickCarousel games={popularGames} className="game-slider" />
+
+          <SlickCarousel
+            games={popularGames && popularGames}
+            className="game-slider"
+          />
+          {/*<SlickCarousel*/}
+          {/*  games={popularGames && popularGames}*/}
+          {/*  className="game-slider"*/}
+          {/*/>*/}
+          {/*<SlickCarousel*/}
+          {/*  games={popularGames && popularGames}*/}
+          {/*  className="game-slider"*/}
+          {/*/>*/}
         </div>
       </div>
     </>

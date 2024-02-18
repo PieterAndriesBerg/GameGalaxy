@@ -11,19 +11,19 @@ const SlickCarousel = ({ games }) => {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    // autoplay: true,
     speed: 2000,
     autoplaySpeed: 10000,
     cssEase: "linear",
   };
 
-  console.log("the games we get is:", games);
+  games && console.log("Games we get is:", games);
 
   return (
     <Slider {...settings} className="game-slider">
       {games
         ? games.map((game) => {
-            return <GameCard game={game} />;
+            return <GameCard game={game} key={game.id} />;
           })
         : "No games"}
     </Slider>

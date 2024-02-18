@@ -19,10 +19,13 @@ const SlickCarousel = ({ games }) => {
 
   games && console.log("Games we get is:", games);
 
+  // Limit the number of games to the first 5
+  const limitedGames = games.slice(0, 5);
+
   return (
     <Slider {...settings} className="game-slider">
       {games
-        ? games.map((game) => {
+        ? limitedGames.map((game) => {
             return <GameCard game={game} key={game.id} />;
           })
         : "No games"}

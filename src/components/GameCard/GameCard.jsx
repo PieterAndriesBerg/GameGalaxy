@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getPlatformIcon } from "../../helpers/platformIconsHelper.jsx";
 
 import "./GameCard.css";
+import { fetchGameDetails } from "../../helpers/api.js";
+import { formatGenres } from "../../helpers/formatGenresHelper.js";
+import { formatReleaseDate } from "../../helpers/formatReleaseDateHelper.js";
 
 const GameCard = ({ game }) => {
+  const [gameDetails, setGameDetails] = useState({});
+
+  // Delete
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchGameDetails(game.id);
+        setGameDetails(response);
+        console.log("Game Details", response);
+      } catch (error) {
+        console.log("Problem Fetching Game Details", error);
+      }
+    };
+
+    void fetchData();
+  }, []);
   return (
     <div className="gamecard-container">
       <div className="gamecard-text-column">
@@ -13,30 +33,21 @@ const GameCard = ({ game }) => {
             {getPlatformIcon(game.platforms)}
           </div>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta
-          eligendi natus quam recusandae voluptatum. A accusamus animi dolores
-          rem sequi unde! Amet architecto commodi ex hic labore necessitatibus.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta
-          eligendi natus quam recusandae voluptatum. A accusamus animi dolores
-          rem sequi unde! Amet architecto commodi ex hic labore necessitatibus.
-        </p>
+        <p className="gamecard-description">{gameDetails.description_raw}</p>
         <div className="detail-labels">
           <div className="gamecard-text-info">
             <span className="flex-end">Release Date:</span>
-            <span className="flex-end">Jan, 18, 2024</span>
+            <span className="flex-end">{formatReleaseDate(game.released)}</span>
           </div>
           <div className="gamecard-text-info">
             <span>Genres:</span>
-            <span>Adventure, Action, RPG</span>
+            <span>{game.genres.length > 0 && formatGenres(game.genres)}</span>
           </div>
         </div>
       </div>
-      <img
-        src="src/assets/Grand_Theft_Auto_V.png"
-        alt="gta-v"
-        className="gamecard-img"
-      />
+      <div className="gamecard-img-container">
+        <img src={game.background_image} alt={game.name} />
+      </div>
     </div>
   );
 };

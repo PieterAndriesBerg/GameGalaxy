@@ -20,6 +20,20 @@ export const fetchPopularGames = async () => {
   }
 };
 
+export const fetchGameDetails = async (id) => {
+  try {
+    const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching game details:", error);
+  }
+};
+
 // TODO: Get a list of games that are new releases
 
 // TODO: Get a list of games that are top rated

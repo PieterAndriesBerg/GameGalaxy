@@ -13,6 +13,13 @@ html {
     box-sizing: inherit;
 }
 
+:root {
+    --main-bg-color: black;
+    --title-color: #2EA226;
+    --primary-color: #6F2232;
+    --background-sliders: rgba(111, 34, 50, 0.50);
+}
+
 body, h1, h2, h3, h4, h5, h6 ,p, ol, ul {
     margin: 0;
     padding: 0;

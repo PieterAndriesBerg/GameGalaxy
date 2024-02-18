@@ -1,5 +1,5 @@
 .slick-prev:before, .slick-next:before {
-    color: purple;
+    color: var(--title-color);
 }
 
 .slick-list {
@@ -9,3 +9,22 @@
 .slick-slide {
     border-radius: 12px;
 }
+
+.slick-dots li button:before {
+    color: var(--title-color);
+    font-size: 14px;
+    line-height: 1;
+}
+
+
+.slick-dots li {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.slick-dots li.slick-active button:before {
+    color: var(--primary-color);
+}
+
+
+

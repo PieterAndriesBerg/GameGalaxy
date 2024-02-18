@@ -15,8 +15,6 @@ const platformIcons = {
 };
 
 export const getPlatformIcon = (platforms) => {
-  console.log("PLATFORMS", platforms);
-
   let platformArray = [];
 
   platforms.map((platform) => {
@@ -48,7 +46,6 @@ export const getPlatformIcon = (platforms) => {
       case "Apple":
         !platformArray.includes("macOs") && platformArray.push("macOs");
     }
-    console.log("PLATFORM---ARRAY!!!!!", platformArray);
   });
 
   return platformArray.map((platformName) => platformIcons[platformName]);

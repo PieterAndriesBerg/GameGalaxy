@@ -8,6 +8,7 @@ const NavBar = () => {
       <ul className="flex-container-nav">
         <NavLink
           to="/"
+          exact
           className={({ isActive }) =>
             isActive ? "active-menu-link" : "default-menu-link"
           }

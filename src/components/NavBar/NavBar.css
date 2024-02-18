@@ -1,9 +1,8 @@
 .navbar {
-    width: 7rem;
+    width: 10vw;
     height: 100vh;
     background-color: #6F2232;
     color: #B9B9B9;
-
 }
 
 .flex-container-nav {
@@ -22,9 +21,11 @@
 .active-menu-link {
     border-bottom: 2px solid green;
     color: green;
+    cursor: pointer;
 }
 
 .default-menu-link {
     color: white;
     border-bottom: 2px solid transparent;
+    cursor: pointer;
 }

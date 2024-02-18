@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Header from "../../components/Header/Header.jsx";
-import "../general-page-style.css";
 import { fetchPopularGames } from "../../helpers/api.js";
-import GameCard from "../../components/GameCard/GameCard.jsx";
+import SlickCarousel from "../../components/SlickCarousel/SlickCarousel.jsx";
+
+import "./Home.css";
 
 const Home = () => {
   const [popularGames, setPopularGames] = useState([]);
@@ -24,10 +25,15 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex-container">
+      <div className="flex-container-row">
         <NavBar />
-        <Header />
-        <GameCard />
+
+        <div className="flex-container-column">
+          <Header />
+          <SlickCarousel games={popularGames} className="game-slider" />
+          <SlickCarousel games={popularGames} className="game-slider" />
+          <SlickCarousel games={popularGames} className="game-slider" />
+        </div>
       </div>
     </>
   );

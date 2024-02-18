@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <header className="header">
       <GameGalaxyLogo className="gamegalaxy-logo" />
-      <h3>Good Evening, User</h3>
+      <h3 className="greeting">Good Evening, User</h3>
       <SearchBar />
     </header>
   );

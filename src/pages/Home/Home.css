@@ -1,0 +1,21 @@
+.flex-container-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-container-column {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    gap: 40px;
+}
+
+.game-slider {
+    margin-left: 50px;
+    width: 800px;
+    height: 300px;
+}
+
+.searchBar {
+    justify-self: flex-end;
+}

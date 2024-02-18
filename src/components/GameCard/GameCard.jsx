@@ -1,6 +1,7 @@
 import React from "react";
+import { getPlatformIcon } from "../../helpers/platformIconsHelper.jsx";
+
 import "./GameCard.css";
-import { getPlatformIcon } from "../../helpers/platformIconsHelper.js";
 
 const GameCard = () => {
   //TODO: Change Dummy data with the fetched api data
@@ -9,16 +10,8 @@ const GameCard = () => {
     <div className="gamecard-container">
       <div className="gamecard-text-column">
         <div className="gamecard-top">
-          <h3>Just Cause</h3>
-          <span className="gamecard-platforms">
-            //TODO: MAP over platforms array that arrives from api and set icons
-            with helper.
-            <img
-              src={getPlatformIcon("Xbox")}
-              alt="xbox"
-              className="platform-icon"
-            />
-          </span>
+          <h3 className="game-title">Just Cause</h3>
+          <span className="gamecard-platforms">{getPlatformIcon("Xbox")}</span>
         </div>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta

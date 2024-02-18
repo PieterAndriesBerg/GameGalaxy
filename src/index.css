@@ -5,6 +5,8 @@ html {
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
     font-size: 16px;
+    color: white;
+    background-color: #1A1A1D;
 }
 
 *, *:before, *:after {
@@ -24,5 +26,11 @@ ol, ul {
 img {
     max-width: 100%;
     height: auto;
+}
+
+a {
+    color: inherit;
+    cursor: auto;
+    text-decoration: none;
 }
 

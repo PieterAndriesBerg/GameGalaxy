@@ -3,8 +3,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SlickCarousel.css";
+import GameCard from "../GameCard/GameCard.jsx";
 
-const SlickCarousel = () => {
+const SlickCarousel = ({ games }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -12,16 +13,20 @@ const SlickCarousel = () => {
     slidesToScroll: 1,
     autoplay: true,
     speed: 2000,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 10000,
     cssEase: "linear",
   };
 
+  console.log("the games we get is:", games);
+
   return (
-    <div className="carousel-div">
-      <Slider {...settings}>
-        {/*  TODO: Place Game Cards here first 3 of every category (Popular, Upcoming, Top Rated*/}
-      </Slider>
-    </div>
+    <Slider {...settings} className="game-slider">
+      {games
+        ? games.map((game) => {
+            return <GameCard game={game} />;
+          })
+        : "No games"}
+    </Slider>
   );
 };
 

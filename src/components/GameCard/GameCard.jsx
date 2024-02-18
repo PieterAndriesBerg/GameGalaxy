@@ -3,15 +3,15 @@ import { getPlatformIcon } from "../../helpers/platformIconsHelper.jsx";
 
 import "./GameCard.css";
 
-const GameCard = () => {
-  //TODO: Change Dummy data with the fetched api data
-
+const GameCard = ({ game }) => {
   return (
     <div className="gamecard-container">
       <div className="gamecard-text-column">
         <div className="gamecard-top">
-          <h3 className="game-title">Just Cause</h3>
-          <span className="gamecard-platforms">{getPlatformIcon("Xbox")}</span>
+          <h3 className="game-title">{game.name}</h3>
+          <div className="platforms-container">
+            <span>{getPlatformIcon(game.platforms)}</span>
+          </div>
         </div>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta

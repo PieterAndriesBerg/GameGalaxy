@@ -10,7 +10,7 @@ const GameCard = ({ game }) => {
         <div className="gamecard-top">
           <h3 className="game-title">{game.name}</h3>
           <div className="platforms-container">
-            <span>{getPlatformIcon(game.platforms)}</span>
+            {getPlatformIcon(game.platforms)}
           </div>
         </div>
         <p>

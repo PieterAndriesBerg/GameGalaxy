@@ -55,18 +55,13 @@
 
 
 .platforms-container {
-
+    gap: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     margin-left: auto;
-}
-
-.platforms-container span {
-    display: flex;
-    gap: 10px;
 }
 
 .platform-icon {

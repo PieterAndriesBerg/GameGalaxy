@@ -30,10 +30,10 @@ const GameCard = ({ game }) => {
         <div className="gamecard-top">
           <h3 className="game-title">{game.name}</h3>
           <div className="platforms-container">
-            {getPlatformIcon(game.platforms)}
+            {getPlatformIcon(game["platforms"])}
           </div>
         </div>
-        <p className="gamecard-description">{gameDetails.description_raw}</p>
+        <p className="gamecard-description">{gameDetails["description_raw"]}</p>
         <div className="detail-labels">
           <div className="gamecard-text-info">
             <span className="flex-end">Release Date:</span>
@@ -41,12 +41,14 @@ const GameCard = ({ game }) => {
           </div>
           <div className="gamecard-text-info">
             <span>Genres:</span>
-            <span>{game.genres.length > 0 && formatGenres(game.genres)}</span>
+            <span>
+              {game["genres"].length > 0 && formatGenres(game["genres"])}
+            </span>
           </div>
         </div>
       </div>
       <div className="gamecard-img-container">
-        <img src={game.background_image} alt={game.name} />
+        <img src={game["background_image"]} alt={game.name} />
       </div>
     </div>
   );

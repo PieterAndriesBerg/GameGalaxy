@@ -13,6 +13,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const popular = await fetchPopularGames();
+        // const newReleases = await fetchNewReleases();
         setPopularGames(popular.results);
         console.log(popular.results);
       } catch (error) {

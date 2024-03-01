@@ -24,12 +24,17 @@ const GameCard = ({ game }) => {
 
     void fetchData();
   }, []);
+
+  const key = `${game.id}-${game["platforms"]
+    .map((platform) => platform.platform.name)
+    .join("-")}`;
+
   return (
     <div className="gamecard-container">
       <div className="gamecard-text-column">
         <div className="gamecard-top">
           <h3 className="game-title">{game.name}</h3>
-          <div className="platforms-container">
+          <div className="platforms-container" key={key}>
             {getPlatformIcon(game["platforms"])}
           </div>
         </div>

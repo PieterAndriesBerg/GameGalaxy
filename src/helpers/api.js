@@ -34,7 +34,21 @@ export const fetchGameDetails = async (id) => {
   }
 };
 
-// TODO: Get a list of games that are new releases
+export const fetchNewReleases = async () => {
+  try {
+    const response = await axios.get("https://api.rawg.io/api/games", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        ordering: "-releases",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching new releases", error);
+    return [];
+  }
+};
 
 // TODO: Get a list of games that are top rated
 

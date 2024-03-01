@@ -6,12 +6,12 @@ import Apple from "../assets/icons/apple.svg?react";
 import Linux from "../assets/icons/linux.svg?react";
 
 const platformIcons = {
-  PC: <PC className="platform-icon" />,
-  Xbox: <Xbox className="platform-icon" />,
-  Playstation: <Playstation className="platform-icon" />,
-  Nintendo: <Nintendo className="platform-icon" />,
-  macOs: <Apple className="platform-icon" />,
-  Linux: <Linux className="platform-icon" />,
+  PC: <PC className="platform-icon" key="pc" />,
+  Xbox: <Xbox className="platform-icon" key="xbox" />,
+  Playstation: <Playstation className="platform-icon" key="playstation" />,
+  Nintendo: <Nintendo className="platform-icon" key="nintendo" />,
+  macOs: <Apple className="platform-icon" key="macos" />,
+  Linux: <Linux className="platform-icon" key="linux" />,
 };
 
 export const getPlatformIcon = (platforms) => {

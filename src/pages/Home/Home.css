@@ -20,3 +20,8 @@
 .searchBar {
     justify-self: flex-end;
 }
+
+.carousel-title {
+    color: white;
+    margin-left: 2.5em;
+}

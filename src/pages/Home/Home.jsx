@@ -44,10 +44,12 @@ const Home = () => {
         <div className="flex-container-column">
           <Header />
 
+          <h2 className="carousel-title">Popular</h2>
           <SlickCarousel
             games={popularGames && popularGames}
             className="game-slider"
           />
+          <h2 className="carousel-title">New Releases</h2>
           <SlickCarousel
             games={newReleasesGames && newReleasesGames}
             className="game-slider"

@@ -20,6 +20,58 @@ export const fetchPopularGames = async () => {
   }
 };
 
+export const fetchNewReleases = async () => {
+  // Last 30 days
+  const currentDate = new Date();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(currentDate.getDate() - 30);
+
+  // Format Date range for API request
+  const dateRange = `${thirtyDaysAgo.toISOString().split("T")[0]},${
+    currentDate.toISOString().split("T")[0]
+  }`;
+
+  let filteredGames = [];
+
+  try {
+    let response = await axios.get("https://api.rawg.io/api/games", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        ordering: "-released",
+        dates: dateRange,
+      },
+    });
+
+    // Filter the initial results
+    filteredGames = response.data.results.filter(
+      (game) => game["ratings_count"] >= 10 && game["metacritic"] !== null
+    );
+
+    // Fetch additional pages until we have at least 5 games
+    while (filteredGames.length < 5 && response.data.next) {
+      const nextPageUrl = response.data.next;
+      const nextPageResponse = await axios.get(nextPageUrl);
+
+      // Filter the results from the next page and add them to the array
+      const nextPageFilteredGames = nextPageResponse.data.results.filter(
+        (game) => game["ratings_count"] >= 10
+      );
+
+      filteredGames = filteredGames.concat(nextPageFilteredGames);
+
+      // Update the response variable for the next iteration
+      response = nextPageResponse;
+    }
+
+    console.log("Filtered games", filteredGames);
+
+    return filteredGames; // Return only the first 5 games
+  } catch (error) {
+    console.error("Error fetching new releases", error);
+    return [];
+  }
+};
+
 export const fetchGameDetails = async (id) => {
   try {
     const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
@@ -31,22 +83,6 @@ export const fetchGameDetails = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching game details:", error);
-  }
-};
-
-export const fetchNewReleases = async () => {
-  try {
-    const response = await axios.get("https://api.rawg.io/api/games", {
-      params: {
-        key: process.env.REACT_APP_RAWG_API_KEY,
-        ordering: "-releases",
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching new releases", error);
-    return [];
   }
 };
 

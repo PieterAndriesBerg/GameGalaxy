@@ -1,27 +1,39 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Header from "../../components/Header/Header.jsx";
-import { fetchPopularGames } from "../../helpers/api.js";
+import { fetchNewReleases, fetchPopularGames } from "../../helpers/api.js";
 import SlickCarousel from "../../components/SlickCarousel/SlickCarousel.jsx";
 
 import "./Home.css";
 
 const Home = () => {
   const [popularGames, setPopularGames] = useState([]);
+  const [newReleasesGames, setNewReleasesGames] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPopularData = async () => {
       try {
         const popular = await fetchPopularGames();
-        // const newReleases = await fetchNewReleases();
         setPopularGames(popular.results);
-        console.log(popular.results);
       } catch (error) {
         console.error("Error Fetching popular games:", error);
       }
     };
 
-    void fetchData();
+    const fetchNewReleasesData = async () => {
+      try {
+        const newReleases = await fetchNewReleases();
+        if (newReleases) {
+          setNewReleasesGames(newReleases);
+        }
+        console.log("!!NEW RELEASES:", newReleases);
+      } catch (error) {
+        console.error("Error fetching new releases games:", error);
+      }
+    };
+
+    void fetchNewReleasesData();
+    void fetchPopularData();
   }, []);
 
   return (
@@ -36,10 +48,10 @@ const Home = () => {
             games={popularGames && popularGames}
             className="game-slider"
           />
-          {/*<SlickCarousel*/}
-          {/*  games={popularGames && popularGames}*/}
-          {/*  className="game-slider"*/}
-          {/*/>*/}
+          <SlickCarousel
+            games={newReleasesGames && newReleasesGames}
+            className="game-slider"
+          />
           {/*<SlickCarousel*/}
           {/*  games={popularGames && popularGames}*/}
           {/*  className="game-slider"*/}

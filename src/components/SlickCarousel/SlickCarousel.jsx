@@ -23,13 +23,15 @@ const SlickCarousel = ({ games }) => {
   const limitedGames = games.slice(0, 5);
 
   return (
-    <Slider {...settings} className="game-slider">
-      {games
-        ? limitedGames.map((game) => {
-            return <GameCard game={game} key={game.id} />;
-          })
-        : "No games"}
-    </Slider>
+    <>
+      <Slider {...settings} className="game-slider">
+        {games
+          ? limitedGames.map((game) => {
+              return <GameCard game={game} key={game.id} />;
+            })
+          : "No games"}
+      </Slider>
+    </>
   );
 };
 

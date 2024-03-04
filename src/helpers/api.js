@@ -86,7 +86,32 @@ export const fetchGameDetails = async (id) => {
   }
 };
 
-// TODO: Get a list of games that are top rated
+export const fetchTopRatedGames = async () => {
+  try {
+    const currentDate = new Date();
+    const tenYearsAgo = new Date();
+    tenYearsAgo.setFullYear(currentDate.getFullYear() - 10);
+
+    const fromDate = tenYearsAgo.toISOString().split("T")[0];
+    const toDate = currentDate.toISOString().split("T")[0];
+
+    const response = await axios.get("https://api.rawg.io/api/games", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        ordering: "-metacritic",
+        page_size: 5,
+        dates: `${fromDate},${toDate}`,
+      },
+    });
+
+    console.log("TOP RATED:", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching top rated games:", error);
+    throw error; // Rethrow the error to be caught by the caller
+  }
+};
 
 // TODO: Get a random game
 

@@ -1,65 +1,77 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Header from "../../components/Header/Header.jsx";
-import { fetchNewReleases, fetchPopularGames } from "../../helpers/api.js";
+import Loading from "../../components/Loading/Loading.jsx";
+import {
+  fetchNewReleases,
+  fetchPopularGames,
+  fetchTopRatedGames,
+} from "../../helpers/api.js";
 import SlickCarousel from "../../components/SlickCarousel/SlickCarousel.jsx";
 
 import "./Home.css";
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
   const [popularGames, setPopularGames] = useState([]);
   const [newReleasesGames, setNewReleasesGames] = useState([]);
+  const [topRatedGames, setTopRatedGames] = useState([]);
 
   useEffect(() => {
-    const fetchPopularData = async () => {
+    const fetchData = async () => {
       try {
         const popular = await fetchPopularGames();
-        setPopularGames(popular.results);
-      } catch (error) {
-        console.error("Error Fetching popular games:", error);
-      }
-    };
+        if (popular) {
+          setPopularGames(popular.results);
+        }
 
-    const fetchNewReleasesData = async () => {
-      try {
         const newReleases = await fetchNewReleases();
         if (newReleases) {
           setNewReleasesGames(newReleases);
         }
-        console.log("!!NEW RELEASES:", newReleases);
+        const topRated = await fetchTopRatedGames();
+        if (topRated) {
+          setTopRatedGames(topRated.results);
+        }
+
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching new releases games:", error);
+        console.error("Error Fetching Data in home.jsx", error);
       }
     };
 
-    void fetchNewReleasesData();
-    void fetchPopularData();
+    void fetchData();
   }, []);
 
   return (
     <>
-      <div className="flex-container-row">
-        <NavBar />
+      {loading ? (
+        <Loading className="loading-component" />
+      ) : (
+        <div className="flex-container-row">
+          <NavBar />
 
-        <div className="flex-container-column">
-          <Header />
+          <div className="flex-container-column">
+            <Header />
 
-          <h2 className="carousel-title">Popular</h2>
-          <SlickCarousel
-            games={popularGames && popularGames}
-            className="game-slider"
-          />
-          <h2 className="carousel-title">New Releases</h2>
-          <SlickCarousel
-            games={newReleasesGames && newReleasesGames}
-            className="game-slider"
-          />
-          {/*<SlickCarousel*/}
-          {/*  games={popularGames && popularGames}*/}
-          {/*  className="game-slider"*/}
-          {/*/>*/}
+            <h2 className="carousel-title">Popular</h2>
+            <SlickCarousel
+              games={popularGames && popularGames}
+              className="game-slider"
+            />
+            <h2 className="carousel-title">New Releases</h2>
+            <SlickCarousel
+              games={newReleasesGames && newReleasesGames}
+              className="game-slider"
+            />
+            <h2 className="carousel-title">Top Rated</h2>
+            <SlickCarousel
+              games={topRatedGames && topRatedGames}
+              className="game-slider"
+            />
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

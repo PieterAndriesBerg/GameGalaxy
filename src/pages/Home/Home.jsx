@@ -25,6 +25,8 @@ const Home = () => {
           setPopularGames(popular.results);
         }
 
+        //TODO: Fix fetchNewReleases because it takes ages to load.
+
         const newReleases = await fetchNewReleases();
         if (newReleases) {
           setNewReleasesGames(newReleases);

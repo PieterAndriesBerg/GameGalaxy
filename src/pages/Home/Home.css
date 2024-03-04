@@ -6,14 +6,12 @@
 .flex-container-column {
     display: flex;
     flex-direction: column;
-    width: 90vw;
     gap: 40px;
 }
 
 .game-slider {
     margin-left: 50px;
-    width: 800px;
-    height: 300px;
+    width: 600px;
     border-radius: 12px;
 }
 
@@ -24,4 +22,15 @@
 .carousel-title {
     color: white;
     margin-left: 2.5em;
+}
+
+.upcoming-list {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-container-column .right {
+    margin: 0 auto;
+    gap: 20px;
+
 }

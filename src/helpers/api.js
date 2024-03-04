@@ -42,7 +42,7 @@ export const fetchNewReleases = async () => {
 
     console.log("New Releases", response.data.results);
 
-    return response.data.results; // Return only the first 5 games
+    return response.data; // Return only the first 5 games
   } catch (error) {
     console.error("Error fetching new releases", error);
     return [];
@@ -86,7 +86,40 @@ export const fetchTopRatedGames = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching top rated games:", error);
-    throw error; // Rethrow the error to be caught by the caller
+    return [];
+  }
+};
+
+export const fetchUpcomingGames = async () => {
+  const currentDate = new Date();
+
+  const twoWeeksFromNow = new Date();
+  twoWeeksFromNow.setDate(currentDate.getDate() + 14);
+
+  const dateRange = `${currentDate.toISOString().split("T")[0]},${
+    twoWeeksFromNow.toISOString().split("T")[0]
+  }`;
+
+  try {
+    const response = await axios.get("https://api.rawg.io/api/games", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        ordering: "-released",
+        dates: dateRange,
+      },
+    });
+
+    const upcomingGames = response.data.results.filter((game) => {
+      const gameReleaseDate = new Date(game.released);
+      return gameReleaseDate > currentDate && game["background_image"] !== null;
+    });
+
+    console.log("Upcoming Games", upcomingGames);
+
+    return upcomingGames.slice(0, 4);
+  } catch (error) {
+    console.error("Error fetching upcoming games", error);
+    return [];
   }
 };
 

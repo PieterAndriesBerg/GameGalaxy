@@ -31,8 +31,6 @@ export const fetchNewReleases = async () => {
     currentDate.toISOString().split("T")[0]
   }`;
 
-  let filteredGames = [];
-
   try {
     let response = await axios.get("https://api.rawg.io/api/games", {
       params: {
@@ -42,30 +40,9 @@ export const fetchNewReleases = async () => {
       },
     });
 
-    // Filter the initial results
-    filteredGames = response.data.results.filter(
-      (game) => game["ratings_count"] >= 10 && game["metacritic"] !== null
-    );
+    console.log("New Releases", response.data.results);
 
-    // Fetch additional pages until we have at least 5 games
-    while (filteredGames.length < 5 && response.data.next) {
-      const nextPageUrl = response.data.next;
-      const nextPageResponse = await axios.get(nextPageUrl);
-
-      // Filter the results from the next page and add them to the array
-      const nextPageFilteredGames = nextPageResponse.data.results.filter(
-        (game) => game["ratings_count"] >= 10
-      );
-
-      filteredGames = filteredGames.concat(nextPageFilteredGames);
-
-      // Update the response variable for the next iteration
-      response = nextPageResponse;
-    }
-
-    console.log("Filtered games", filteredGames);
-
-    return filteredGames; // Return only the first 5 games
+    return response.data.results; // Return only the first 5 games
   } catch (error) {
     console.error("Error fetching new releases", error);
     return [];

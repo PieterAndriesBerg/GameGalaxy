@@ -75,7 +75,6 @@
 
 .gamecard-description {
     cursor: default;
-    user-select: all;
     overflow-y: scroll;
     scrollbar-color: var(--title-color) rgba(88, 88, 88, 0.15);
     scrollbar-width: thin;

@@ -4,7 +4,6 @@ import "./Upcoming.css";
 import { formatReleaseDate } from "../../helpers/formatReleaseDateHelper.js";
 
 const Upcoming = ({ game }) => {
-  console.log("UPCOMING Game", game);
   return (
     <div className="upcoming-container">
       <div className="upcoming-game-container">

@@ -17,8 +17,6 @@ const SlickCarousel = ({ games }) => {
     cssEase: "linear",
   };
 
-  games && console.log("Games we get is:", games);
-
   // Limit the number of games to the first 5
   const limitedGames = games.slice(0, 5);
 

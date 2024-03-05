@@ -40,8 +40,6 @@ export const fetchNewReleases = async () => {
       },
     });
 
-    console.log("New Releases", response.data.results);
-
     return response.data; // Return only the first 5 games
   } catch (error) {
     console.error("Error fetching new releases", error);
@@ -81,8 +79,6 @@ export const fetchTopRatedGames = async () => {
       },
     });
 
-    console.log("TOP RATED:", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Error fetching top rated games:", error);
@@ -114,12 +110,69 @@ export const fetchUpcomingGames = async () => {
       return gameReleaseDate > currentDate && game["background_image"] !== null;
     });
 
-    console.log("Upcoming Games", upcomingGames);
-
     return upcomingGames.slice(0, 4);
   } catch (error) {
     console.error("Error fetching upcoming games", error);
     return [];
+  }
+};
+
+export const fetchGameOfTheDay = async () => {
+  try {
+    const currentDate = new Date(); // get current date as a Date object
+    const currentDateFormatted = currentDate.toISOString().split("T")[0]; // get current date in YYYY-MM-DD format
+
+    // Check if we have a game of the day stored in local storage
+    const storedGameOfTheDay = localStorage.getItem("gameOfTheDay");
+    const storedDate = localStorage.getItem("gameOfTheDayDate");
+
+    // If we have a game of the day and the date it was fetched is the same as the current date, return the stored game
+    if (storedGameOfTheDay && storedDate === currentDateFormatted) {
+      return JSON.parse(storedGameOfTheDay);
+    }
+
+    // If we don't have a game of the day for the current date, fetch a new one
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(currentDate.getMonth() - 1);
+
+    const dateRange = `${
+      oneMonthAgo.toISOString().split("T")[0]
+    },${currentDateFormatted}`;
+
+    const response = await axios.get("https://api.rawg.io/api/games", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        ordering: "-rating",
+        dates: dateRange, // Fetch games released within the last month
+        page_size: 50,
+      },
+    });
+
+    if (response.data.results.length === 0) {
+      throw new Error("No games found");
+    }
+
+    // Filter out games that have no rating
+    const gamesWithRating = response.data.results.filter(
+      (game) => game["rating"] !== null && game["rating"] !== 0
+    );
+
+    // Generate a random index
+    const randomIndex = Math.floor(Math.random() * gamesWithRating.length);
+
+    // Fetch the game details
+    const gameDetails = await fetchGameDetails(gamesWithRating[randomIndex].id);
+
+    // Store the game of the day and the date it was fetched in local storage
+    localStorage.setItem("gameOfTheDay", JSON.stringify(gameDetails));
+    localStorage.setItem("gameOfTheDayDate", currentDateFormatted); // Store the date as a string
+
+    // Return the game details
+    console.log("GOTD", gameDetails);
+    return gameDetails;
+  } catch (error) {
+    console.error("Error fetching game of the day: ", error);
+    return null;
   }
 };
 

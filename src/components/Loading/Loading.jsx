@@ -1,6 +1,5 @@
 import React from "react";
 import LoadingLogo from "../../assets/loading.svg?react";
-
 import "./Loading.css";
 
 const Loading = () => {

@@ -9,14 +9,11 @@ import { formatReleaseDate } from "../../helpers/formatReleaseDateHelper.js";
 const GameCard = ({ game }) => {
   const [gameDetails, setGameDetails] = useState({});
 
-  // Delete
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetchGameDetails(game.id);
         setGameDetails(response);
-        console.log("Game Details", response);
       } catch (error) {
         console.log("Problem Fetching Game Details", error);
       }

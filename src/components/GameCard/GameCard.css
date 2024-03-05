@@ -55,10 +55,11 @@
     display: flex;
     align-items: center;
     font-size: 18px;
+    width: 60%;
 }
 
 .platforms-container {
-    gap: 10px;
+    gap: 8px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -68,7 +69,7 @@
 }
 
 .platform-icon {
-    width: 20px;
+    width: 18px;
     height: auto;
     fill: white;
 }
@@ -81,7 +82,8 @@
     max-height: 300px;
     min-height: 100px;
     padding-right: 20px;
-    font-size: 14px;
+    font-size: 0.9rem;
+    font-weight: lighter;
 }
 
 

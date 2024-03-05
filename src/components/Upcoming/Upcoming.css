@@ -19,6 +19,10 @@
     width: 50%;
 }
 
+.upcoming-game-container div p {
+    font-weight: lighter;
+}
+
 .upcoming-container img {
     width: 125px;
     height: 100px;

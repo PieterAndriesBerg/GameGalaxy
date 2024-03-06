@@ -1,0 +1,62 @@
+.gotd-container {
+    display: flex;
+    background-color: var(--background-sliders);
+    border-radius: 12px;
+    width: 45vw;
+    align-items: center;
+}
+
+.gotd-image-container {
+    width: 50%;
+    height: 100%;
+}
+
+.gotd-image {
+    object-fit: cover;
+    border-radius: 12px;
+    height: 100%;
+}
+
+.gotd-container-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 auto;
+    padding: 50px;
+    width: 50%;
+}
+
+.gotd-description {
+    overflow-y: scroll;
+    font-weight: lighter;
+    cursor: default;
+    scrollbar-color: var(--title-color) rgba(88, 88, 88, 0.15);
+    scrollbar-width: thin;
+    max-height: 200px;
+    min-height: 100px;
+    padding-right: 20px;
+    font-size: 0.9rem;
+}
+
+.gotd-ratings div {
+    display: flex;
+    gap: 10px;
+}
+
+.gotd-ratings p {
+    text-transform: capitalize;
+}
+
+.gotd-ratings span {
+    font-weight: lighter;
+    text-decoration: underline;
+}
+
+.gotd-info-bottom {
+    display: flex;
+    gap: 20px;
+}
+
+.gotd-info-bottom p {
+    width: 100px;
+}

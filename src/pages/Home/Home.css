@@ -30,6 +30,6 @@
 }
 
 .flex-container-column .right {
-    margin: 0 auto;
+    margin-left: 20px;
     gap: 20px;
 }

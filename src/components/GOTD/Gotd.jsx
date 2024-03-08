@@ -28,10 +28,12 @@ const Gotd = ({ game }) => {
           </div>
           <span>{game["ratings_count"]} RATINGS</span>
         </div>
-        <div className="gotd-info-bottom">
-          <p>Developer:</p>
-          <span>{game["developers"][0].name}</span>
-        </div>
+        {game["developers"] > 0 ? (
+          <div className="gotd-info-bottom">
+            <p>Developer:</p>
+            <span>{game["developers"][0].name}</span>
+          </div>
+        ) : null}
         <div className="gotd-info-bottom">
           <p>Release Date:</p>
           <span>{game["released"]}</span>

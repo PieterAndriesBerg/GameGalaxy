@@ -63,13 +63,13 @@ const Home = () => {
         <Loading className="loading-component" />
       ) : (
         <>
-          <div className="flex-container-row">
+          <div className="flex-container-row-home">
             <NavBar />
 
             <div className="flex-container-column">
               <Header />
 
-              <div className="flex-container-row">
+              <div className="flex-container-row-2">
                 <div className="flex-container-column">
                   <h2 className="carousel-title">Popular</h2>
                   <SlickCarousel

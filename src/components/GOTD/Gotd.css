@@ -3,10 +3,11 @@
     background-color: var(--background-sliders);
     border-radius: 12px;
     align-items: center;
+    width: 40vw;
 }
 
 .gotd-image-container {
-    width: 50%;
+    width: 35%;
     height: 100%;
 }
 
@@ -22,7 +23,12 @@
     gap: 30px;
     margin: 0 auto;
     padding: 50px;
-    width: 50%;
+    width: 65%;
+}
+
+.gotd-info-platforms {
+    display: flex;
+    gap: 10px;
 }
 
 .gotd-description {

@@ -1,9 +1,9 @@
-import PC from "../assets/icons/windows.svg?react";
-import Xbox from "../assets/icons/xbox.svg?react";
-import Playstation from "../assets/icons/playstation.svg?react";
-import Nintendo from "../assets/icons/nintendo-switch.svg?react";
-import Apple from "../assets/icons/apple.svg?react";
-import Linux from "../assets/icons/linux.svg?react";
+import PC from "../assets/platform-icons/windows.svg?react";
+import Xbox from "../assets/platform-icons/xbox.svg?react";
+import Playstation from "../assets/platform-icons/playstation.svg?react";
+import Nintendo from "../assets/platform-icons/nintendo-switch.svg?react";
+import Apple from "../assets/platform-icons/apple.svg?react";
+import Linux from "../assets/platform-icons/linux.svg?react";
 
 const platformIcons = {
   PC: <PC className="platform-icon" key="pc" />,

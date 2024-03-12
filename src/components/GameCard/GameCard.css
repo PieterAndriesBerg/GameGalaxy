@@ -7,6 +7,10 @@
     height: 300px;
 }
 
+.gamecard-container:hover {
+    cursor: pointer;
+}
+
 .gamecard-text-column {
     display: flex;
     flex-direction: column;
@@ -85,6 +89,7 @@
     font-size: 0.9rem;
     font-weight: lighter;
 }
+
 
 
 

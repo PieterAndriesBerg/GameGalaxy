@@ -4,6 +4,10 @@
     border-radius: 12px;
 }
 
+.upcoming-container:hover {
+    cursor: pointer;
+}
+
 .upcoming-game-container {
     display: flex;
     flex-direction: row;

@@ -1,5 +1,4 @@
 .navbar {
-    width: 6vw;
     height: 100vh;
     background-color: #6F2232;
     color: #B9B9B9;
@@ -11,23 +10,32 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
+    width: 5vw;
+    padding: 1.5rem 0;
+}
+
+.navlinks-center {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0 auto 0;
 }
 
 .flex-container a {
     text-decoration: none;
 }
 
-.active-menu-link {
-    border-bottom: 2px solid green;
-    color: green;
+.active-menu-link svg {
     cursor: pointer;
+    fill: black;
 }
 
-.default-menu-link {
-    color: white;
-    border-bottom: 2px solid transparent;
+.default-menu-link svg {
     cursor: pointer;
+    fill: #B9B9B9;
 }

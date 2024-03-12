@@ -6,6 +6,10 @@
     width: 40vw;
 }
 
+.gotd-container:hover {
+    cursor: pointer;
+}
+
 .gotd-image-container {
     width: 35%;
     height: 100%;

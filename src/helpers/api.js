@@ -176,6 +176,38 @@ export const fetchGameOfTheDay = async () => {
   }
 };
 
+export const fetchGenres = async () => {
+  try {
+    const response = await axios.get("https://api.rawg.io/api/genres", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+      },
+    });
+
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching genres:", error);
+    return [];
+  }
+};
+
+export const fetchGamesByGenre = async (genreId) => {
+  try {
+    const response = await axios.get(`https://api.rawg.io/api/games`, {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        genres: genreId,
+        page_size: 50,
+      },
+    });
+
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching games by genre:", error);
+    return [];
+  }
+};
+
 // TODO: Get a random game
 
 // TODO: Get a game based on Mood from the user. e.g. (map angry to a genre etc)

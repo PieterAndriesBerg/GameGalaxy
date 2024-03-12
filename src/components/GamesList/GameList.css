@@ -1,0 +1,7 @@
+.game-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 85%;
+    gap: 50px;
+}

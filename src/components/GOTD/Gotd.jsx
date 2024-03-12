@@ -3,11 +3,12 @@ import "./Gotd.css";
 import { getPlatformIcon } from "../../helpers/platformIconsHelper.jsx";
 import { formatGenres } from "../../helpers/formatGenresHelper.js";
 import StarRating from "../StarRating/StarRating.jsx";
+import { Link } from "react-router-dom";
 
 const Gotd = ({ game }) => {
   console.log("GOTD", game);
   return (
-    <div className="gotd-container">
+    <Link to={`/games/${game.id}`} className="gotd-container">
       <div className="gotd-image-container">
         <img
           src={game["background_image"]}
@@ -45,7 +46,7 @@ const Gotd = ({ game }) => {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

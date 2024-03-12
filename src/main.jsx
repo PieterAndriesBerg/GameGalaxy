@@ -9,6 +9,7 @@ import Mood from "./pages/Mood/Mood.jsx";
 import Random from "./pages/Random/Random.jsx";
 import Developers from "./pages/Developers/Developers.jsx";
 import Top100 from "./pages/Top100/Top100.jsx";
+import GameDetailsPage from "./pages/GameDetails/GameDetailsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
   {
     path: "/top100",
     element: <Top100 />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/games/:id",
+    element: <GameDetailsPage />,
     errorElement: <ErrorPage />,
   },
 ]);

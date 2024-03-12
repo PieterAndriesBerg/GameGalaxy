@@ -1,0 +1,24 @@
+.genres-flex-container {
+    display: flex;
+    width: 90vw;
+}
+
+.genres-flex-container-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.genres-list-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.genres-games-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}

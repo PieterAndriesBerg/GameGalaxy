@@ -2,6 +2,8 @@
 
 import axios from "axios";
 
+//TODO: DESCRIPTIONS ARE NOT BEING FETCHED FOR SOME GAMES, FIX THIS, CHANGE TO REACT QUERY IN GAMECARD.JSX
+
 export const fetchPopularGames = () => {
   return async () => {
     const response = await axios.get("https://api.rawg.io/api/games", {

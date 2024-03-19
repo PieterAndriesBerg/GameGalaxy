@@ -52,9 +52,9 @@ const Home = () => {
         console.log("API CALLS RESULTS:", results);
 
         setGameData({
-          popularGames: popular.results || [],
+          popularGames: popular || [],
           newReleasesGames: newReleases || [],
-          topRatedGames: topRated.results || [],
+          topRatedGames: topRated || [],
           upcomingGames: upcoming || [],
           gameOfTheDay: gameOfTheDay || {},
         });

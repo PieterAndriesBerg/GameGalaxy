@@ -11,7 +11,7 @@ export const fetchPopularGames = async () => {
       },
     });
     console.log("POPULAR GAMES FETCHED", response.data.results);
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.error("Error fetching popular games: ", error);
     return [];
@@ -85,7 +85,7 @@ export const fetchTopRatedGames = async () => {
     });
 
     console.log("TOP RATED GAMES FETCHED", response.data.results);
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.error("Error fetching top rated games:", error);
     return [];

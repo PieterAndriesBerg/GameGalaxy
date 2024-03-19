@@ -66,7 +66,12 @@ const NavBar = () => {
           </NavLink>
         </div>
         <div>
-          <NavLink to="#">
+          <NavLink
+            to="/logout"
+            className={({ isActive }) =>
+              isActive ? "active-menu-link" : "default-menu-link"
+            }
+          >
             <LogoutIcon />
           </NavLink>
         </div>

@@ -6,6 +6,7 @@ import "./SlickCarousel.css";
 import GameCard from "../GameCard/GameCard.jsx";
 
 const SlickCarousel = ({ games }) => {
+  console.log("SLICKCAROUSEL:", games);
   const settings = {
     dots: true,
     infinite: true,
@@ -17,13 +18,15 @@ const SlickCarousel = ({ games }) => {
     cssEase: "linear",
   };
 
+  const gamesList = games || [];
+
   // Limit the number of games to the first 5
-  const limitedGames = games.slice(0, 5);
+  const limitedGames = (games || []).slice(0, 5);
 
   return (
     <>
       <Slider {...settings} className="game-slider">
-        {games
+        {gamesList.length > 0
           ? limitedGames.map((game) => {
               return <GameCard game={game} key={game.id} />;
             })

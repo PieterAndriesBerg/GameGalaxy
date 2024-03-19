@@ -1,5 +1,3 @@
-// noinspection JSCheckFunctionSignatures
-
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -31,22 +29,37 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const apiCalls = [
+          fetchPopularGames(),
+          fetchNewReleases(),
+          fetchTopRatedGames(),
+          fetchUpcomingGames(),
+          fetchGameOfTheDay(),
+        ];
+
+        const results = await Promise.all(
+          apiCalls.map((call) =>
+            call.catch((e) => {
+              console.error("API call failed: ", e);
+              return e;
+            })
+          )
+        );
+
         const [popular, newReleases, topRated, upcoming, gameOfTheDay] =
-          await Promise.all([
-            fetchPopularGames(),
-            fetchNewReleases(),
-            fetchTopRatedGames(),
-            fetchUpcomingGames(),
-            fetchGameOfTheDay(),
-          ]);
+          results;
+
+        console.log("API CALLS RESULTS:", results);
 
         setGameData({
-          popularGames: popular ? popular.results : [],
-          newReleasesGames: newReleases ? newReleases.results : [],
-          topRatedGames: topRated ? topRated.results : [],
+          popularGames: popular.results || [],
+          newReleasesGames: newReleases || [],
+          topRatedGames: topRated.results || [],
           upcomingGames: upcoming || [],
           gameOfTheDay: gameOfTheDay || {},
         });
+
+        console.log("GAME DATA:", gameData);
 
         setLoading(false);
       } catch (error) {
@@ -73,19 +86,25 @@ const Home = () => {
                 <div className="flex-container-column">
                   <h2 className="carousel-title">Popular</h2>
                   <SlickCarousel
-                    games={gameData.popularGames && gameData.popularGames}
+                    games={
+                      gameData.popularGames && gameData.popularGames.slice(0, 5)
+                    }
                     className="game-slider"
                   />
                   <h2 className="carousel-title">New Releases</h2>
                   <SlickCarousel
                     games={
-                      gameData.newReleasesGames && gameData.newReleasesGames
+                      gameData.newReleasesGames &&
+                      gameData.newReleasesGames.slice(0, 5)
                     }
                     className="game-slider"
                   />
                   <h2 className="carousel-title">Top Rated</h2>
                   <SlickCarousel
-                    games={gameData.topRatedGames && gameData.topRatedGames}
+                    games={
+                      gameData.topRatedGames &&
+                      gameData.topRatedGames.slice(0, 5)
+                    }
                     className="game-slider"
                   />
                 </div>

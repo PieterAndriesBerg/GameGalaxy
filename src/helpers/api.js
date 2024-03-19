@@ -1,7 +1,5 @@
 // This file will contain all helper functions related to api RAWG.IO
 
-// TODO: Get a list of games that are popular
-
 import axios from "axios";
 
 export const fetchPopularGames = async () => {
@@ -12,7 +10,7 @@ export const fetchPopularGames = async () => {
         ordering: "-added",
       },
     });
-
+    console.log("POPULAR GAMES FETCHED", response.data.results);
     return response.data;
   } catch (error) {
     console.error("Error fetching popular games: ", error);
@@ -40,7 +38,13 @@ export const fetchNewReleases = async () => {
       },
     });
 
-    return response.data; // Return only the first 5 games
+    if (Array.isArray(response.data.results)) {
+      console.log("NEW RELEASES FETCHED", response.data.results);
+      return response.data.results; // Return only the first 5 games
+    } else {
+      console.error("Unexpected response data", response.data);
+      return [];
+    }
   } catch (error) {
     console.error("Error fetching new releases", error);
     return [];
@@ -55,6 +59,7 @@ export const fetchGameDetails = async (id) => {
       },
     });
 
+    console.log("GAME DETAILS FETCHED", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching game details:", error);
@@ -79,6 +84,7 @@ export const fetchTopRatedGames = async () => {
       },
     });
 
+    console.log("TOP RATED GAMES FETCHED", response.data.results);
     return response.data;
   } catch (error) {
     console.error("Error fetching top rated games:", error);
@@ -110,6 +116,7 @@ export const fetchUpcomingGames = async () => {
       return gameReleaseDate > currentDate && game["background_image"] !== null;
     });
 
+    console.log("UPCOMING GAMES FETCHED", upcomingGames);
     return upcomingGames.slice(0, 4);
   } catch (error) {
     console.error("Error fetching upcoming games", error);
@@ -184,6 +191,7 @@ export const fetchGenres = async () => {
       },
     });
 
+    console.log("GENRES FETCHED", response.data.results);
     return response.data.results;
   } catch (error) {
     console.error("Error fetching genres:", error);
@@ -201,6 +209,7 @@ export const fetchGamesByGenre = async (genreId) => {
       },
     });
 
+    console.log("GAMES BY GENRE FETCHED", response.data.results);
     return response.data.results;
   } catch (error) {
     console.error("Error fetching games by genre:", error);

@@ -10,6 +10,9 @@ import Random from "./pages/Random/Random.jsx";
 import Developers from "./pages/Developers/Developers.jsx";
 import Top100 from "./pages/Top100/Top100.jsx";
 import GameDetailsPage from "./pages/GameDetails/GameDetailsPage.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -51,6 +54,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );

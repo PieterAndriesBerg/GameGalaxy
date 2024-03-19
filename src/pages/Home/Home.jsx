@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useQuery } from "react-query";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Header from "../../components/Header/Header.jsx";
 import Loading from "../../components/Loading/Loading.jsx";
@@ -10,65 +11,52 @@ import {
   fetchUpcomingGames,
 } from "../../helpers/api.js";
 import SlickCarousel from "../../components/SlickCarousel/SlickCarousel.jsx";
-
 import "./Home.css";
 import Upcoming from "../../components/Upcoming/Upcoming.jsx";
 import Gotd from "../../components/GOTD/Gotd.jsx";
 
 const Home = () => {
-  console.log("Home Component Rendered");
-  const [loading, setLoading] = useState(true);
-  const [gameData, setGameData] = useState({
-    popularGames: [],
-    newReleasesGames: [],
-    topRatedGames: [],
-    upcomingGames: [],
-    gameOfTheDay: {},
-  });
+  // REACT QUERY DATA FETCHING
+  const {
+    data: popularGames,
+    isLoading: popularIsLoading,
+    error: popularError,
+  } = useQuery("popularGames", fetchPopularGames());
+  const {
+    data: newReleases,
+    isLoading: newReleasesIsLoading,
+    error: newReleasesError,
+  } = useQuery("newReleases", fetchNewReleases());
+  const {
+    data: topRatedGames,
+    isLoading: topRatedIsLoading,
+    error: topRatedError,
+  } = useQuery("topRatedGames", fetchTopRatedGames());
+  const {
+    data: upcomingGames,
+    isLoading: upcomingIsLoading,
+    error: upcomingError,
+  } = useQuery("upcomingGames", fetchUpcomingGames());
+  const {
+    data: gameOfTheDay,
+    isLoading: gameOfTheDayIsLoading,
+    error: gameOfTheDayError,
+  } = useQuery("gameOfTheDay", fetchGameOfTheDay());
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiCalls = [
-          fetchPopularGames(),
-          fetchNewReleases(),
-          fetchTopRatedGames(),
-          fetchUpcomingGames(),
-          fetchGameOfTheDay(),
-        ];
+    console.log("Popular Games:", popularGames);
+    console.log("New Releases:", newReleases);
+    console.log("Top Rated Games:", topRatedGames);
+    console.log("Upcoming Games:", upcomingGames);
+    console.log("Game of the Day:", gameOfTheDay);
+  }, [popularGames, newReleases, topRatedGames, upcomingGames, gameOfTheDay]);
 
-        const results = await Promise.all(
-          apiCalls.map((call) =>
-            call.catch((e) => {
-              console.error("API call failed: ", e);
-              return e;
-            })
-          )
-        );
-
-        const [popular, newReleases, topRated, upcoming, gameOfTheDay] =
-          results;
-
-        console.log("API CALLS RESULTS:", results);
-
-        setGameData({
-          popularGames: popular || [],
-          newReleasesGames: newReleases || [],
-          topRatedGames: topRated || [],
-          upcomingGames: upcoming || [],
-          gameOfTheDay: gameOfTheDay || {},
-        });
-
-        console.log("GAME DATA:", gameData);
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error Fetching Data in home.jsx", error);
-      }
-    };
-
-    void fetchData();
-  }, []);
+  const loading =
+    popularIsLoading ||
+    newReleasesIsLoading ||
+    topRatedIsLoading ||
+    upcomingIsLoading ||
+    gameOfTheDayIsLoading;
 
   return (
     <>
@@ -86,36 +74,28 @@ const Home = () => {
                 <div className="flex-container-column">
                   <h2 className="carousel-title">Popular</h2>
                   <SlickCarousel
-                    games={
-                      gameData.popularGames && gameData.popularGames.slice(0, 5)
-                    }
+                    games={popularGames && popularGames.slice(0, 5)}
                     className="game-slider"
                   />
                   <h2 className="carousel-title">New Releases</h2>
                   <SlickCarousel
-                    games={
-                      gameData.newReleasesGames &&
-                      gameData.newReleasesGames.slice(0, 5)
-                    }
+                    games={newReleases && newReleases.slice(0, 5)}
                     className="game-slider"
                   />
                   <h2 className="carousel-title">Top Rated</h2>
                   <SlickCarousel
-                    games={
-                      gameData.topRatedGames &&
-                      gameData.topRatedGames.slice(0, 5)
-                    }
+                    games={topRatedGames && topRatedGames.slice(0, 5)}
                     className="game-slider"
                   />
                 </div>
                 <div className="flex-container-column right">
                   <h2>Upcoming</h2>
-                  {gameData.upcomingGames.map((game) => {
+                  {upcomingGames.map((game) => {
                     return <Upcoming game={game && game} key={game.id} />;
                   })}
 
                   <h2>Game Of The Day</h2>
-                  <Gotd game={gameData.gameOfTheDay && gameData.gameOfTheDay} />
+                  <Gotd game={gameOfTheDay && gameOfTheDay} />
                 </div>
               </div>
             </div>

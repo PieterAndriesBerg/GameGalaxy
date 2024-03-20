@@ -54,6 +54,11 @@ export const fetchNewReleases = () => {
 
 export const fetchGameDetails = (id) => {
   return async () => {
+    if (!id) {
+      console.error("Error: id is null or undefined");
+      return;
+    }
+
     try {
       const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
         params: {
@@ -139,14 +144,14 @@ export const fetchGameOfTheDay = () => {
       const currentDate = new Date(); // get current date as a Date object
       const currentDateFormatted = currentDate.toISOString().split("T")[0]; // get current date in YYYY-MM-DD format
 
-      // Check if we have a game of the day stored in local storage
-      const storedGameOfTheDay = localStorage.getItem("gameOfTheDay");
-      const storedDate = localStorage.getItem("gameOfTheDayDate");
-
-      // If we have a game of the day and the date it was fetched is the same as the current date, return the stored game
-      if (storedGameOfTheDay && storedDate === currentDateFormatted) {
-        return JSON.parse(storedGameOfTheDay);
-      }
+      // // Check if we have a game of the day stored in local storage
+      // const storedGameOfTheDay = localStorage.getItem("gameOfTheDay");
+      // const storedDate = localStorage.getItem("gameOfTheDayDate");
+      //
+      // // If we have a game of the day and the date it was fetched is the same as the current date, return the stored game
+      // if (storedGameOfTheDay && storedDate === currentDateFormatted) {
+      //   return JSON.parse(storedGameOfTheDay);
+      // }
 
       // If we don't have a game of the day for the current date, fetch a new one
       const oneMonthAgo = new Date();
@@ -165,6 +170,8 @@ export const fetchGameOfTheDay = () => {
         },
       });
 
+      console.log("API GOTD", response.data.results);
+
       if (response.data.results.length === 0) {
         throw new Error("No games found");
       }
@@ -174,13 +181,21 @@ export const fetchGameOfTheDay = () => {
         (game) => game["rating"] !== null && game["rating"] !== 0
       );
 
+      // Check if gamesWithRating is empty
+      if (gamesWithRating.length === 0) {
+        throw new Error("No games with rating found");
+        return null;
+      }
+
+      console.log("GAMES WITH RATING", gamesWithRating);
+
       // Generate a random index
       const randomIndex = Math.floor(Math.random() * gamesWithRating.length);
 
       // Fetch the game details
       const gameDetails = await fetchGameDetails(
         gamesWithRating[randomIndex].id
-      );
+      )();
 
       // Store the game of the day and the date it was fetched in local storage
       localStorage.setItem("gameOfTheDay", JSON.stringify(gameDetails));
@@ -191,6 +206,7 @@ export const fetchGameOfTheDay = () => {
       return gameDetails;
     } catch (error) {
       console.error("Error fetching game of the day: ", error);
+      console.error("Error Details: ", error.response.data);
       return null;
     }
   };

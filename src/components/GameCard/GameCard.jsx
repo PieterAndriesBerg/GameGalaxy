@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getPlatformIcon } from "../../helpers/platformIconsHelper.jsx";
-
 import "./GameCard.css";
 import { fetchGameDetails } from "../../helpers/api.js";
 import { formatGenres } from "../../helpers/formatGenresHelper.js";
 import { formatReleaseDate } from "../../helpers/formatReleaseDateHelper.js";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import Loading from "../Loading/Loading.jsx";
 
 const GameCard = ({ game, className }) => {
-  const [gameDetails, setGameDetails] = useState({});
+  const {
+    data: gameDetails,
+    error,
+    isLoading,
+  } = useQuery(["gameDetails", game.id], () => fetchGameDetails(game.id), {
+    staleTime: 1000 * 60 * 5,
+    retry: 1,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchGameDetails(game.id);
-        setGameDetails(response);
-      } catch (error) {
-        console.log("Problem Fetching Game Details", error);
-      }
-    };
-
-    void fetchData();
-  }, []);
+  if (isLoading) {
+    return <Loading className="loading-component" />;
+  }
 
   const key = `${game.id}-${game["platforms"]
     .map((platform) => platform.platform.name)

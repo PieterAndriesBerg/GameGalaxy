@@ -13,6 +13,8 @@ import GameDetailsPage from "./pages/GameDetails/GameDetailsPage.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { AuthProvider } from "./context/AuthProvider.jsx";
+import Register from "./pages/Register/Register.jsx";
+import Login from "./pages/Login/Login.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,6 +58,16 @@ const router = createBrowserRouter([
   {
     path: "/games/:id",
     element: <GameDetailsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
     errorElement: <ErrorPage />,
   },
 ]);

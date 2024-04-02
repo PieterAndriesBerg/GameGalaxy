@@ -1,65 +1,81 @@
-import React, { createContext, useContext, useState } from "react";
 import { useMutation } from "react-query";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 
-const AuthContext = createContext();
+export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const useLogin = () => {
-    return useMutation(({ username, password }) => {
-      axios.post("https://api.datavortex.nl/movielux/users/authenticate", {
-        username,
-        password,
-      }),
+  const loginMutation = useMutation(
+    ({ username, password }) => {
+      return axios.post(
+        "https://api.datavortex.nl/movielux/users/authenticate",
         {
-          onSuccess: (data) => {
-            // save user data and jwt token in the state or local storage
-            console.log(data);
-            setUser(data.data);
+          username,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "movielux:itycrNMvSKgvPssF1iZE",
           },
-          onError: (error) => {
-            // handle error
-            console.error("Error logging in: ", error);
-          },
-        };
-    });
-  };
-
-  const registerMutation = useMutation(
-    ({ username, password }) =>
-      axios.post("https://api.datavortex.nl/movielux/users", {
-        username,
-        password,
-      }),
+        }
+      );
+    },
     {
       onSuccess: (data) => {
-        // handle successful registration
-        console.log("Registration successful", data);
-        setUser(data.data); // Save the user data in the state
+        console.log(data);
+        setUser(data.data); // call setUser directly here
       },
       onError: (error) => {
-        // handle registration error
-        console.error("Registration failed", error);
+        console.error("Error logging in: ", error);
       },
     }
   );
 
-  const useRegister = async (username, password) => {
-    try {
-      await registerMutation.mutateAsync({ username, password });
-    } catch (error) {
-      console.error("Error registering mutation: ", error);
+  const registerMutation = useMutation(
+    ({ username, email, password, info, authorities }) =>
+      axios.post(
+        "https://api.datavortex.nl/movielux/users",
+        {
+          username,
+          email,
+          password,
+          info,
+          authorities,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Api-Key": "movielux:itycrNMvSKgvPssF1iZE",
+          },
+        }
+      ),
+    {
+      onSuccess: (data) => {
+        console.log("Registration successful", data);
+        setUser(data.data); // call setUser directly here
+      },
+      onError: (error) => {
+        console.error("Registration failed", error);
+      },
     }
-  };
+  );
 
   const logout = () => {
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, useLogin, useRegister, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login: loginMutation.mutate, // pass the mutate function here
+        register: registerMutation.mutate, // pass the mutate function here
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

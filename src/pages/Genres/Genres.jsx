@@ -10,8 +10,6 @@ import Pagination from "../../components/Pagination/Pagination.jsx";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 
-//TODO: Check of cache wel echt werkt voor api calls
-
 const Genres = () => {
   const [selectedGenreId, setSelectedGenreId] = useState(null);
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ const Genres = () => {
     data: genres,
   } = useQuery("genres", fetchGenres, {
     staleTime: 1000 * 60 * 60 * 5,
-    cacheTime: 1000 * 60 * 60 * 5,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   // Fetch Games for genre if clicked

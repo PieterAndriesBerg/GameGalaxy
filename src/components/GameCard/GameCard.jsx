@@ -4,11 +4,13 @@ import "./GameCard.css";
 import { formatGenres } from "../../helpers/formatGenresHelper.js";
 import { formatReleaseDate } from "../../helpers/formatReleaseDateHelper.js";
 import { Link } from "react-router-dom";
+import Loading from "../Loading/Loading.jsx";
 
 const GameCard = ({ game, className }) => {
-  // if (isLoading) {
-  //   return <Loading className="loading-component" />;
-  // }
+  console.log("GameCard game", game);
+  if (!game || !game["platforms"]) {
+    return <Loading />;
+  }
 
   const key = `${game.id}-${game["platforms"]
     .map((platform) => platform.platform.name)

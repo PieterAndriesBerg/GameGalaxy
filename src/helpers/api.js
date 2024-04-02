@@ -1,8 +1,5 @@
 // This file will contain all helper functions related to api RAWG.IO
-
 import axios from "axios";
-
-//TODO: DESCRIPTIONS ARE NOT BEING FETCHED FOR SOME GAMES, FIX THIS, CHANGE TO REACT QUERY IN GAMECARD.JSX
 
 export const fetchPopularGames = () => {
   return async () => {

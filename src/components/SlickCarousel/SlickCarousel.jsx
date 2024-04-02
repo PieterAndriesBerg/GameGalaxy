@@ -6,7 +6,8 @@ import "./SlickCarousel.css";
 import GameCard from "../GameCard/GameCard.jsx";
 
 const SlickCarousel = ({ games }) => {
-  console.log("SLICKCAROUSEL:", games);
+  console.log("SlickCarousel games", games);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -18,15 +19,20 @@ const SlickCarousel = ({ games }) => {
     cssEase: "linear",
   };
 
-  const gamesList = games || [];
+  //Filter out games that has Content Warning
+  const filteredOutContentWarning = games.filter(
+    (game) => game.name !== "Content Warning"
+  );
+
+  console.log("Filtered out content warning", filteredOutContentWarning);
 
   // Limit the number of games to the first 5
-  const limitedGames = (games || []).slice(0, 5);
+  const limitedGames = (filteredOutContentWarning || []).slice(0, 5);
 
   return (
     <>
       <Slider {...settings} className="game-slider">
-        {gamesList.length > 0
+        {filteredOutContentWarning.length > 0
           ? limitedGames.map((game) => {
               return <GameCard game={game} key={game.id} />;
             })

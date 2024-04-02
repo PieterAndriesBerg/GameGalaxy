@@ -12,6 +12,7 @@ import Top100 from "./pages/Top100/Top100.jsx";
 import GameDetailsPage from "./pages/GameDetails/GameDetailsPage.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { AuthProvider } from "./context/AuthProvider.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,8 +63,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

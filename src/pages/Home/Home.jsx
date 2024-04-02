@@ -87,6 +87,10 @@ const Home = () => {
     upcomingIsLoading ||
     gameOfTheDayIsLoading;
 
+  useEffect(() => {
+    console.log("New releases in home", newReleases);
+  }, [newReleases]);
+
   console.log(" HOME GOTD", gameOfTheDay);
 
   return (
@@ -110,7 +114,7 @@ const Home = () => {
                   />
                   <h2 className="carousel-title">New Releases</h2>
                   <SlickCarousel
-                    games={newReleases ? newReleases.slice(0, 5) : []}
+                    games={newReleases ? newReleases.slice(0, 10) : []}
                     className="game-slider"
                   />
                   <h2 className="carousel-title">Top Rated</h2>

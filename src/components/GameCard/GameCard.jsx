@@ -1,33 +1,21 @@
 import React from "react";
 import { getPlatformIcon } from "../../helpers/platformIconsHelper.jsx";
 import "./GameCard.css";
-import { fetchGameDetails } from "../../helpers/api.js";
 import { formatGenres } from "../../helpers/formatGenresHelper.js";
 import { formatReleaseDate } from "../../helpers/formatReleaseDateHelper.js";
 import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
-import Loading from "../Loading/Loading.jsx";
 
 const GameCard = ({ game, className }) => {
-  const {
-    data: gameDetails,
-    error,
-    isLoading,
-  } = useQuery(["gameDetails", game.id], () => fetchGameDetails(game.id), {
-    staleTime: 1000 * 60 * 5,
-    retry: 1,
-  });
-
-  if (isLoading) {
-    return <Loading className="loading-component" />;
-  }
+  // if (isLoading) {
+  //   return <Loading className="loading-component" />;
+  // }
 
   const key = `${game.id}-${game["platforms"]
     .map((platform) => platform.platform.name)
     .join("-")}`;
 
   return (
-    <Link to={`/games/${game.id}`}>
+    <Link to={{ pathname: `/games/${game.id}`, state: { game } }}>
       <div className={`gamecard-container`}>
         <div className="gamecard-text-column">
           <div className="gamecard-top">
@@ -37,9 +25,7 @@ const GameCard = ({ game, className }) => {
             </div>
           </div>
           <p className="gamecard-description">
-            {gameDetails["description_raw"]
-              ? gameDetails["description_raw"]
-              : "Click to get more info about the game!"}
+            Click to get more info about the game!
           </p>
           <div className="detail-labels">
             <div className="gamecard-text-info">

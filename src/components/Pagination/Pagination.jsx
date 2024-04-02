@@ -1,8 +1,9 @@
 import React from "react";
+import "./Pagination.css";
 
 const Pagination = ({ currentPage, handlePageChange, totalPages }) => {
   return (
-    <div>
+    <div className="pagination">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}

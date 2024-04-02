@@ -1,24 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { fetchGameDetails } from "../../helpers/api.js";
 import "./GameDetailsPage.css";
+import { useQuery } from "react-query";
 
 const GameDetailsPage = () => {
   const { id } = useParams();
-  const [gameDetails, setGameDetails] = useState({});
+  const location = useLocation();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchGameDetails(id);
-        setGameDetails(response);
-      } catch (error) {
-        console.error("Problem Fetching Game Details", error);
-      }
-    };
+  const {
+    isLoading,
+    isError,
+    isFetching,
+    isStale,
+    data: gameDetails,
+  } = useQuery(["gameDetails", id], () => fetchGameDetails(id), {
+    enabled: !!id,
+    staleTime: 1000 * 60 * 60 * 5,
+    cacheTime: 1000 * 60 * 60 * 5,
+  });
 
-    void fetchData();
-  }, [id]);
+  const game = location.state?.game;
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading game details</div>;
+  }
 
   useEffect(() => {
     console.log(gameDetails);

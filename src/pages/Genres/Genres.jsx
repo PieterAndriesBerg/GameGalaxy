@@ -9,6 +9,7 @@ import GameList from "../../components/GamesList/GameList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
+
 //TODO: Check of cache wel echt werkt voor api calls
 
 const Genres = () => {
@@ -19,22 +20,30 @@ const Genres = () => {
   const gamesPerPage = 20;
   const [totalGames, setTotalGames] = useState(0);
 
+  // Fetch Genre Cards
   const {
     isLoading,
     isError,
+    isFetching: isFetchingGenres,
+    isStale: isStaleGenres,
     data: genres,
   } = useQuery("genres", fetchGenres, {
     staleTime: 1000 * 60 * 60 * 5,
     cacheTime: 1000 * 60 * 60 * 5,
   });
-  const { data: selectedGenreGames, refetch: refetchGamesByGenre } = useQuery(
-    ["gamesByGenre", selectedGenreId],
-    () => fetchGamesByGenre(selectedGenreId, page),
+
+  // Fetch Games for genre if clicked
+  const {
+    data: selectedGenreGames,
+    isFetching: isFetchingGames,
+    isStale: isStaleGames,
+  } = useQuery(
+    ["gamesByGenre", selectedGenreId, page],
+    () => (selectedGenreId ? fetchGamesByGenre(selectedGenreId, page) : null),
     {
-      enabled: false,
+      enabled: !!selectedGenreId,
       staleTime: 1000 * 60 * 60 * 5,
       cacheTime: 1000 * 60 * 60 * 5,
-      initialData: location.state?.selectedGenreGames,
     }
   );
 
@@ -44,15 +53,7 @@ const Genres = () => {
 
   const handleGenreClick = async (genreId) => {
     setSelectedGenreId(genreId);
-    await refetchGamesByGenre();
-    navigate(location.pathname, { state: { selectedGenreGames } });
   };
-
-  useEffect(() => {
-    if (selectedGenreId) {
-      void refetchGamesByGenre();
-    }
-  }, [page, selectedGenreId]);
 
   useEffect(() => {
     if (genres && selectedGenreId) {
@@ -66,6 +67,26 @@ const Genres = () => {
   }, [genres, selectedGenreId]);
 
   const totalPages = Math.ceil(totalGames / gamesPerPage);
+
+  useEffect(() => {
+    if (!isFetchingGenres && !isStaleGenres) {
+      console.log("Genres data is served from the cache");
+    } else if (isFetchingGenres) {
+      console.log("Genres data is currently being fetched");
+    } else if (!isFetchingGenres && isStaleGenres) {
+      console.log("Genres data is stale and needs to be refetched");
+    }
+
+    if (!isFetchingGames && !isStaleGames) {
+      console.log("Selected genre games data is served from the cache");
+    } else if (isFetchingGames) {
+      console.log("Selected genre games data is currently being fetched");
+    } else if (!isFetchingGames && isStaleGames) {
+      console.log(
+        "Selected genre games data is stale and needs to be refetched"
+      );
+    }
+  }, [isFetchingGenres, isStaleGenres, isFetchingGames, isStaleGames]);
 
   return (
     <>
@@ -85,11 +106,15 @@ const Genres = () => {
                     onClick={() => handleGenreClick(genre.id)}
                   />
                 ))}
+            </div>
+            {totalPages > 1 && (
               <Pagination
                 currentPage={page}
                 handlePageChange={handlePageChange}
                 totalPages={totalPages}
               />
+            )}
+            <div className="genres-list-row">
               <GameList
                 games={
                   typeof selectedGenreGames === "function"
@@ -98,6 +123,13 @@ const Genres = () => {
                 }
               />
             </div>
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={page}
+                handlePageChange={handlePageChange}
+                totalPages={totalPages}
+              />
+            )}
           </div>
         </div>
       )}

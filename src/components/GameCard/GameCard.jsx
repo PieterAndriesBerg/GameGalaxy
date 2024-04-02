@@ -39,7 +39,7 @@ const GameCard = ({ game, className }) => {
           <p className="gamecard-description">
             {gameDetails["description_raw"]
               ? gameDetails["description_raw"]
-              : "No info"}
+              : "Click to get more info about the game!"}
           </p>
           <div className="detail-labels">
             <div className="gamecard-text-info">

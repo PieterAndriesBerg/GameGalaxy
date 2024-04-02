@@ -21,6 +21,7 @@ const Home = () => {
     data: popularGames,
     isLoading: popularIsLoading,
     error: popularError,
+    isFetching: isFetchingPopularGames,
   } = useQuery("popularGames", fetchPopularGames(), {
     staleTime: 1000 * 60 * 12,
     cacheTime: 1000 * 60 * 60 * 5,
@@ -70,6 +71,14 @@ const Home = () => {
     console.log("Upcoming Games:", upcomingGames);
     console.log("Game of the Day:", gameOfTheDay);
   }, [popularGames, newReleases, topRatedGames, upcomingGames, gameOfTheDay]);
+
+  useEffect(() => {
+    if (isFetchingPopularGames) {
+      console.log("Fetching popular games from API...");
+    } else {
+      console.log("Popular games fetched from cache");
+    }
+  }, [isFetchingPopularGames]);
 
   const loading =
     popularIsLoading ||

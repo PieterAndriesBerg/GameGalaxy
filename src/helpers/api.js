@@ -212,42 +212,38 @@ export const fetchGameOfTheDay = () => {
   };
 };
 
-export const fetchGenres = () => {
-  return async () => {
-    try {
-      const response = await axios.get("https://api.rawg.io/api/genres", {
-        params: {
-          key: process.env.REACT_APP_RAWG_API_KEY,
-        },
-      });
+export const fetchGenres = async () => {
+  try {
+    const response = await axios.get("https://api.rawg.io/api/genres", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+      },
+    });
 
-      console.log("GENRES FETCHED", response.data.results);
-      return response.data.results;
-    } catch (error) {
-      console.error("Error fetching genres:", error);
-      return [];
-    }
-  };
+    console.log("GENRES FETCHED", response.data.results);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching genres:", error);
+    return [];
+  }
 };
 
-export const fetchGamesByGenre = (genreId) => {
-  return async () => {
-    try {
-      const response = await axios.get(`https://api.rawg.io/api/games`, {
-        params: {
-          key: process.env.REACT_APP_RAWG_API_KEY,
-          genres: genreId,
-          page_size: 50,
-        },
-      });
+export const fetchGamesByGenre = async (genreId) => {
+  try {
+    const response = await axios.get(`https://api.rawg.io/api/games`, {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        genres: genreId,
+        page_size: 50,
+      },
+    });
 
-      console.log("GAMES BY GENRE FETCHED", response.data.results);
-      return response.data.results;
-    } catch (error) {
-      console.error("Error fetching games by genre:", error);
-      return [];
-    }
-  };
+    console.log("GAMES BY GENRE FETCHED", response.data.results);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching games by genre:", error);
+    return [];
+  }
 };
 
 // TODO: Get a random game

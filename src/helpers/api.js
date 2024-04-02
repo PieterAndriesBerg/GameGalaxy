@@ -228,13 +228,14 @@ export const fetchGenres = async () => {
   }
 };
 
-export const fetchGamesByGenre = async (genreId) => {
+export const fetchGamesByGenre = async (genreId, page = 1) => {
   try {
     const response = await axios.get(`https://api.rawg.io/api/games`, {
       params: {
         key: process.env.REACT_APP_RAWG_API_KEY,
         genres: genreId,
-        page_size: 50,
+        page_size: 20,
+        page: page,
       },
     });
 

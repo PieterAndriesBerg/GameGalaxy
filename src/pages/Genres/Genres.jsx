@@ -7,11 +7,15 @@ import { fetchGamesByGenre, fetchGenres } from "../../helpers/api.js";
 import GenreCard from "../../components/GenreCard/GenreCard.jsx";
 import GameList from "../../components/GamesList/GameList.jsx";
 import { useQuery } from "react-query";
+import { useLocation, useNavigate } from "react-router-dom";
 
 //TODO: Check of cache wel echt werkt voor api calls
 
 const Genres = () => {
   const [selectedGenreId, setSelectedGenreId] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const {
     isLoading,
     isError,
@@ -27,11 +31,14 @@ const Genres = () => {
       enabled: false,
       staleTime: 1000 * 60 * 60 * 5,
       cacheTime: 1000 * 60 * 60 * 5,
+      initialData: location.state?.selectedGenreGames,
     }
   );
 
   const handleGenreClick = async (genreId) => {
     setSelectedGenreId(genreId);
+    await refetchGamesByGenre();
+    navigate(location.pathname, { state: { selectedGenreGames } });
   };
 
   useEffect(() => {

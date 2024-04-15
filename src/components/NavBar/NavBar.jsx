@@ -1,6 +1,7 @@
 import React from "react";
 import "./NavBar.css";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider.jsx";
 
 // Importing navbar icons
 import HomeIcon from "../../assets/navbar-icons/home.svg?react";
@@ -12,6 +13,7 @@ import LogoutIcon from "../../assets/navbar-icons/logout.svg?react";
 import Top100Icon from "../../assets/navbar-icons/top-100.svg?react";
 
 const NavBar = () => {
+  const { user, logout } = useAuth();
   return (
     <nav className="navbar">
       <ul className="flex-container-nav">
@@ -65,16 +67,23 @@ const NavBar = () => {
             <MoodIcon />
           </NavLink>
         </div>
-        <div>
-          <NavLink
-            to="/logout"
-            className={({ isActive }) =>
-              isActive ? "active-menu-link" : "default-menu-link"
-            }
-          >
-            <LogoutIcon />
-          </NavLink>
-        </div>
+        {user && (
+          <div>
+            <NavLink
+              to="/logout"
+              className={({ isActive }) =>
+                isActive ? "active-menu-link" : "default-menu-link"
+              }
+              onClick={(event) => {
+                event.preventDefault();
+                logout();
+                alert("You have been logged out");
+              }}
+            >
+              <LogoutIcon />
+            </NavLink>
+          </div>
+        )}
       </ul>
     </nav>
   );

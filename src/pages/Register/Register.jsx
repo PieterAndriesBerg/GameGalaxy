@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -8,6 +9,7 @@ const Register = () => {
   const [info, setInfo] = useState("");
   const [authorities, setAuthorities] = useState([{ authority: "USER" }]);
   const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,6 +21,10 @@ const Register = () => {
         info,
         authorities,
       });
+
+      if (register) {
+        navigate("/login");
+      }
     } catch (error) {
       console.error("Registration failed:", error);
     }

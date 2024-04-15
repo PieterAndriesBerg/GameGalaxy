@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       await login({ username, password }); // call login directly here
+      if (login) {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }

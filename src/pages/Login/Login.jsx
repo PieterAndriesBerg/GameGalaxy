@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"; // Import your CSS file for styling
+import "./Login.css";
+import Header from "../../components/Header/Header.jsx"; // Import your CSS file for styling
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -33,9 +34,10 @@ const Login = () => {
 
   return (
     <>
-      <h1>Login️</h1>
+      <Header />
       <div className="login-container">
         <div className="login-form">
+          <h1>Login️</h1>
           <form onSubmit={handleSubmit}>
             <label>
               Username:

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
+import Header from "../../components/Header/Header.jsx";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -35,9 +36,11 @@ const Register = () => {
 
   return (
     <>
-      <h1>Register</h1>
+      <Header />
+
       <div className="register-container">
         <div className="register-form">
+          <h1>Register</h1>
           <form onSubmit={handleSubmit}>
             <label>
               Username:

@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
+import "./Login.css"; // Import your CSS file for styling
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({}); // New state for errors
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validateForm()) return; // Validate form and return early if there are errors
     try {
-      await login({ username, password }); // call login directly here
+      await login({ username, password });
       if (login) {
         navigate("/");
       }
@@ -20,31 +23,63 @@ const Login = () => {
     }
   };
 
+  const validateForm = () => {
+    let formErrors = {};
+    if (!username) formErrors.username = "Email is required";
+    if (!password) formErrors.password = "Password is required";
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0; // Returns true if no errors
+  };
+
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+    <>
+      <h1>Login️</h1>
+      <div className="login-container">
+        <div className="login-form">
+          <form onSubmit={handleSubmit}>
+            <label>
+              Email:
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="email-input"
+                required
+              />
+              {errors.username && <p>{errors.username}</p>}{" "}
+              {/* Display error message */}
+            </label>
+            <label>
+              Password:
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="password-input"
+                required
+              />
+              {errors.password && <p>{errors.password}</p>}{" "}
+              {/* Display error message */}
+            </label>
+            <button type="submit" className="login-button">
+              Login
+            </button>
+          </form>
+          <div className="additional-message">
+            A galaxy full of games is waiting for you! Login Now
+          </div>
+        </div>
+        <div className="image-container">
+          <img
+            src="src/assets/elden-ring.jpg"
+            alt="elden-ring"
+            className="game-image"
           />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

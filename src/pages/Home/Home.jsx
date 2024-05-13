@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Header from "../../components/Header/Header.jsx";
@@ -64,34 +64,12 @@ const Home = () => {
     retry: 1,
   });
 
-  useEffect(() => {
-    console.log("Popular Games:", popularGames);
-    console.log("New Releases:", newReleases);
-    console.log("Top Rated Games:", topRatedGames);
-    console.log("Upcoming Games:", upcomingGames);
-    console.log("Game of the Day:", gameOfTheDay);
-  }, [popularGames, newReleases, topRatedGames, upcomingGames, gameOfTheDay]);
-
-  useEffect(() => {
-    if (isFetchingPopularGames) {
-      console.log("Fetching popular games from API...");
-    } else {
-      console.log("Popular games fetched from cache");
-    }
-  }, [isFetchingPopularGames]);
-
   const loading =
     popularIsLoading ||
     newReleasesIsLoading ||
     topRatedIsLoading ||
     upcomingIsLoading ||
     gameOfTheDayIsLoading;
-
-  useEffect(() => {
-    console.log("New releases in home", newReleases);
-  }, [newReleases]);
-
-  console.log(" HOME GOTD", gameOfTheDay);
 
   return (
     <>

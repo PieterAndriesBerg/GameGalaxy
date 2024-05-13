@@ -49,26 +49,59 @@ export const fetchNewReleases = () => {
   };
 };
 
-export const fetchGameDetails = (id) => {
-  return async () => {
-    if (!id) {
-      console.error("Error: id is null or undefined");
-      return;
-    }
+// export const fetchGameDetails = (id) => {
+//   return async () => {
+//     if (!id) {
+//       console.error("Error: id is null or undefined");
+//       return null;
+//     }
+//
+//     try {
+//       const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
+//         params: {
+//           key: process.env.REACT_APP_RAWG_API_KEY,
+//         },
+//       });
+//
+//       const data = await response.data;
+//       console.log("GAME DETAILS FETCHED", data);
+//       return data;
+//     } catch (error) {
+//       console.error("Error fetching game details:", error);
+//     }
+//   };
+// };
+export const fetchGameDetails = async (id) => {
+  try {
+    const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+      },
+    });
 
-    try {
-      const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
+    const data = await response.data;
+    console.log("GAME DETAILS FETCHED", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching game details:", error);
+  }
+};
+
+export const fetchGameScreenshots = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://api.rawg.io/api/games/${id}/screenshots`,
+      {
         params: {
           key: process.env.REACT_APP_RAWG_API_KEY,
         },
-      });
-
-      console.log("GAME DETAILS FETCHED", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching game details:", error);
-    }
-  };
+      }
+    );
+    console.log("GAME SCREENSHOTS FETCHED", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching game screenshots:", error);
+  }
 };
 
 export const fetchTopRatedGames = () => {

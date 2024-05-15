@@ -60,6 +60,8 @@ const GameDetailsPage = () => {
     return <div>Error loading game details</div>;
   }
 
+  const slides = gameTrailers.slice(0, 2).concat(gameScreenshots);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -69,12 +71,10 @@ const GameDetailsPage = () => {
     beforeChange: (current, next) => setCurrentSlide(next),
     customPaging: (i) => {
       let previewImage;
-      let trailerCount =
-        gameTrailers && gameTrailers.length > 0 ? gameTrailers.length : 0;
-      if (i < trailerCount && gameTrailers) {
-        previewImage = gameTrailers[i]?.preview; // Assuming the trailer object has a thumbnail property
-      } else {
-        previewImage = gameScreenshots[i]?.image;
+      if (slides[i]) {
+        console.log("slides[i]", slides[i]);
+        // Use the trailer preview if a trailer exists, otherwise use the screenshot preview
+        previewImage = slides[i]?.preview || slides[i]?.image;
       }
       return (
         <div className={`slick-dots ${currentSlide === i ? "active" : ""}`}>

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { fetchGameDetails, fetchGameScreenshots } from "../../helpers/api.js";
+import { Link, useLocation, useParams } from "react-router-dom";
+import {
+  fetchGameDetails,
+  fetchGameScreenshots,
+  fetchGameTrailers,
+} from "../../helpers/api.js";
 import "./GameDetailsPage.css";
 import { useQuery } from "react-query";
 import Header from "../../components/Header/Header.jsx";
@@ -35,6 +39,17 @@ const GameDetailsPage = () => {
     cacheTime: 1000 * 60 * 60 * 5,
   });
 
+  const {
+    isLoading: isLoadingTrailers,
+    isError: isErrorTrailers,
+    isFetching: isFetchingTrailers,
+    isStale: isStaleTrailers,
+    data: gameTrailers,
+  } = useQuery(["gameTrailers", id], () => fetchGameTrailers(id), {
+    staleTime: 1000 * 60 * 60 * 5,
+    cacheTime: 1000 * 60 * 60 * 5,
+  });
+
   const game = location.state?.game;
 
   if (isLoadingDetails || isLoadingScreenshots) {
@@ -52,11 +67,21 @@ const GameDetailsPage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     beforeChange: (current, next) => setCurrentSlide(next),
-    customPaging: (i) => (
-      <div className={`slick-dots ${currentSlide === i ? "active" : ""}`}>
-        <img src={gameScreenshots.results[i].image} alt={`preview ${i}`} />
-      </div>
-    ),
+    customPaging: (i) => {
+      let previewImage;
+      let trailerCount =
+        gameTrailers && gameTrailers.length > 0 ? gameTrailers.length : 0;
+      if (i < trailerCount && gameTrailers) {
+        previewImage = gameTrailers[i]?.preview; // Assuming the trailer object has a thumbnail property
+      } else {
+        previewImage = gameScreenshots[i]?.image;
+      }
+      return (
+        <div className={`slick-dots ${currentSlide === i ? "active" : ""}`}>
+          <img src={previewImage} alt={`preview ${i}`} />
+        </div>
+      );
+    },
   };
 
   const handleStoreLink = (e, url) => {
@@ -68,25 +93,34 @@ const GameDetailsPage = () => {
   };
 
   return (
-    <div className="flex-container-row-home">
+    <div className="gamedetails-flex-container-row-home">
       <NavBar />
-      <div className="flex-container-column">
+      <div className="gamedetails-flex-container-column">
         <Header />
         <div className="container-full-game-details-row">
           <div className="container-full-game-details">
             <h1 className="game-title">{gameDetails.name}</h1>
             <h2>About</h2>
             <p className="game-description_raw">
-              {gameDetails.description_raw}
+              {gameDetails["description_raw"]}
             </p>
           </div>
           <div className="container-full-game-details-images">
             <Slider {...settings} className="screenshots-slider">
-              {gameScreenshots.results.map((screenshot) => (
-                <div key={screenshot.id}>
-                  <img src={screenshot.image} alt={gameDetails.name} />
-                </div>
-              ))}
+              {gameTrailers && gameTrailers.length > 0
+                ? gameTrailers.slice(0, 2).map((trailer) => (
+                    <div key={trailer.id} className="div-trailers">
+                      <video src={trailer.data.max} controls />
+                    </div>
+                  ))
+                : null}
+              {gameScreenshots
+                ? gameScreenshots.map((screenshot) => (
+                    <div key={screenshot.id} className="div-screenshots">
+                      <img src={screenshot.image} alt={gameDetails.name} />
+                    </div>
+                  ))
+                : null}
             </Slider>
           </div>
         </div>
@@ -95,13 +129,66 @@ const GameDetailsPage = () => {
           <div className="where-to-buy-row">
             {gameDetails["stores"].map((store) => {
               return (
-                <WhereToBuy
-                  store={store}
-                  key={store.id}
-                  handleStoreLink={handleStoreLink}
-                />
+                store && (
+                  <WhereToBuy
+                    store={store}
+                    key={store.id}
+                    handleStoreLink={handleStoreLink}
+                  />
+                )
               );
             })}
+          </div>
+        </div>
+        <div>
+          <h2>Game Info</h2>
+          <div className="container-full-game-details-infosection">
+            <div>
+              <h3>Release Date:</h3>
+              <p>{gameDetails.released}</p>
+              <h3>Genres:</h3>
+              <p>{gameDetails.genres.map((genre) => genre.name).join(", ")}</p>
+            </div>
+            <div>
+              <h3>Platforms:</h3>
+              <p>
+                {gameDetails.platforms
+                  .map((platform) => platform.platform.name)
+                  .join(", ")}
+              </p>
+              <h3>Developers:</h3>
+              <p>
+                {gameDetails.developers
+                  .map((developer) => developer.name)
+                  .join(", ")}
+              </p>
+            </div>
+            <div>
+              <h3>Publishers:</h3>
+              <p>
+                {gameDetails.publishers
+                  .map((publisher) => publisher.name)
+                  .join(", ")}
+              </p>
+              <h3>Rating:</h3>
+              <p>{gameDetails.rating}</p>
+            </div>
+            <div>
+              <h3>Metacritic:</h3>
+              <p>{gameDetails.metacritic ? gameDetails.metacritic : "NR"}</p>
+              <h3>Average Playtime:</h3>
+              <p>{gameDetails.playtime} Hours</p>
+            </div>
+            <div>
+              <h3>ESRB Rating:</h3>
+              <p>
+                {gameDetails.esrb_rating ? gameDetails.esrb_rating.name : "NR"}
+              </p>
+              <h3>Website:</h3>
+              <Link to={gameDetails.website} target="_blank">
+                Click here to visit the website
+              </Link>
+            </div>
           </div>
         </div>
       </div>

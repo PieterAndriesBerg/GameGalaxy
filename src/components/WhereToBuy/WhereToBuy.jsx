@@ -4,6 +4,7 @@ import XBOX from "../../assets/platform-icons/xbox.svg?react";
 import PLAYSTATION from "../../assets/platform-icons/playstation.svg?react";
 import NINTENDO from "../../assets/platform-icons/nintendo-switch.svg?react";
 import EPICGAMES from "../../assets/platform-icons/epic-games.svg?react";
+import GOG from "../../assets/platform-icons/gog.svg?react";
 import "./WhereToBuy.css";
 
 const WhereToBuy = ({ store, handleStoreLink }) => {
@@ -14,6 +15,7 @@ const WhereToBuy = ({ store, handleStoreLink }) => {
     "PlayStation Store": PLAYSTATION,
     "Nintendo Store": NINTENDO,
     "Epic Games": EPICGAMES,
+    GOG: GOG,
   };
 
   const Logo = storeLogos[store.store.name];

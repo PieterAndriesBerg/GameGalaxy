@@ -1,26 +1,28 @@
-.flex-container-row-home {
+.gamedetails-flex-container-row-home {
     display: flex;
     flex-direction: row;
 }
 
-.flex-container-column {
+.gamedetails-flex-container-column {
     display: flex;
     flex-direction: column;
     margin-left: 30px;
-    padding: 20px;
+    padding: 10px;
 }
 
 .container-full-game-details-row {
     display: flex;
     flex-direction: row;
     gap: 50px;
+    flex-wrap: wrap;
 }
 .container-full-game-details {
     display: flex;
     flex-direction: column;
 }
 
-.container-full-game-details img {
+.container-full-game-details-images .div-trailers video,
+.container-full-game-details-images .div-screenshots img {
     width: 100%;
     height: auto;
 }
@@ -46,7 +48,6 @@
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-
 }
 
 .screenshots-slider {
@@ -69,6 +70,7 @@
     opacity: 0.5;
 }
 
+
 .container-full-game-details-images .slick-dots.active img {
     opacity: 1;
 }
@@ -77,18 +79,13 @@
     width: 125px;
 }
 
-.description-sections {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    gap: 20px;
-}
-
 .container-full-game-details-buyinfo {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
 }
 
 .where-to-buy-row {
@@ -96,8 +93,31 @@
     flex-direction: row;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
+.container-full-game-details-infosection {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container-full-game-details-infosection div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-full-game-details-infosection p {
+    font-size: 1em;
+    font-weight: lighter;
+}
 
 
 

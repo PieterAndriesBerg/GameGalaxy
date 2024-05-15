@@ -58,7 +58,7 @@ const Home = () => {
     data: gameOfTheDay,
     isLoading: gameOfTheDayIsLoading,
     error: gameOfTheDayError,
-  } = useQuery("gameOfTheDay", fetchGameOfTheDay(), {
+  } = useQuery("gameOfTheDay", fetchGameOfTheDay, {
     staleTime: 1000 * 60 * 12,
     cacheTime: 1000 * 60 * 60 * 5,
     retry: 1,

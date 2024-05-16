@@ -4,6 +4,7 @@ import "./Header.css";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import { useAuth } from "../../context/AuthProvider.jsx";
 import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Header = () => {
   const { user } = useAuth();
@@ -21,18 +22,25 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user && user.token && typeof user.token === "string") {
       const decodedToken = jwtDecode(user.token);
-      console.log(decodedToken);
       setUsername(decodedToken.sub);
-      console.log(username);
+    } else {
+      console.error("Invalid token:", user ? user.token : "No user");
+      // handle invalid token here
     }
   }, [user]);
 
   return (
     <header className="header">
       <GameGalaxyLogo className="gamegalaxy-logo" />
-      {user && <h3 className="greeting">{`${getGreeting()}, ${username}`}</h3>}
+      {user ? (
+        <h3 className="greeting">{`${getGreeting()}, ${username}`}</h3>
+      ) : (
+        <Link to="/login" className="login-link">
+          Login
+        </Link> // Redirect to login page if no user
+      )}
       <SearchBar />
     </header>
   );

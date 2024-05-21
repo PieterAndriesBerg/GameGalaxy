@@ -1,18 +1,31 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 import "./DeveloperBox.css";
 
 const DeveloperBox = ({ developer }) => {
+  const navigate = useNavigate();
+  const goToGameDetailsPage = (gameId) => {
+    navigate(`/games/${gameId}`);
+  };
+
   return (
     <div className="developer-box">
       <h2>{developer.name}</h2>
       <ul>
         {developer.games.slice(0, 3).map((game) => (
-          <li key={game.id}>{game.name}</li>
+          <a key={game.id} onClick={() => goToGameDetailsPage(game.id)}>
+            {game.name}
+          </a>
         ))}
       </ul>
     </div>
   );
+};
+
+DeveloperBox.propTypes = {
+  developer: PropTypes.object.isRequired,
 };
 
 export default DeveloperBox;

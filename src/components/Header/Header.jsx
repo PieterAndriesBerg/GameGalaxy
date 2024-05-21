@@ -22,11 +22,11 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (user && user.token && typeof user.token === "string") {
+    if (user ? user.token && typeof user.token === "string" : null) {
       const decodedToken = jwtDecode(user.token);
       setUsername(decodedToken.sub);
     } else {
-      console.error("Invalid token:", user ? user.token : "No user");
+      console.error("Invalid token:", user ? user.token : "No user logged in?");
       // handle invalid token here
     }
   }, [user]);

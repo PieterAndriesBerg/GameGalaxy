@@ -5,19 +5,17 @@ import NavBar from "../../components/NavBar/NavBar.jsx";
 import DeveloperBox from "../../components/DeveloperBox/DeveloperBox.jsx";
 import Header from "../../components/Header/Header.jsx";
 import "./Developers.css";
+import Loading from "../../components/Loading/Loading.jsx";
 
 const Developers = () => {
   const [pageUrl, setPageUrl] = useState("https://api.rawg.io/api/developers");
-  const [developers, setDevelopers] = useState([]);
 
   const { data, status } = useQuery(
     ["developers", pageUrl],
     () => fetchDevelopers(pageUrl),
     {
-      onSuccess: (data) => {
-        setDevelopers((prev) => data.results);
-      },
       staleTime: 1000 * 60 * 60 * 24,
+      cacheTime: 1000 * 60 * 60 * 24 * 7, // Data is cached for 7 days
     }
   );
 
@@ -34,7 +32,7 @@ const Developers = () => {
   };
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (status === "error") {
@@ -48,8 +46,8 @@ const Developers = () => {
         <Header />
         <h1>Welcome to Developers</h1>
         <div className="developers-data-row">
-          {developers
-            ? developers.map((developer) => (
+          {data?.results
+            ? data.results.map((developer) => (
                 <DeveloperBox key={developer.id} developer={developer} />
               ))
             : null}

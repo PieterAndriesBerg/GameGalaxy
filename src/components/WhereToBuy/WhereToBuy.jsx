@@ -18,14 +18,14 @@ const WhereToBuy = ({ store, handleStoreLink }) => {
     GOG: GOG,
   };
 
-  const Logo = storeLogos[store.store.name];
+  const Logo = storeLogos[store?.store.name];
 
   return (
     <div
       className="container-where-to-buy"
       onClick={(e) => handleStoreLink(e, store.store.domain)}
     >
-      <span>{store.store.name}</span>
+      <span>{store?.store.name}</span>
       <Logo className="where-to-buy-logo" />
     </div>
   );

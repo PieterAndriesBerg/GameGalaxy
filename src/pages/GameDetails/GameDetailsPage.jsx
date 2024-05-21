@@ -13,6 +13,7 @@ import NavBar from "../../components/NavBar/NavBar.jsx";
 import WhereToBuy from "../../components/WhereToBuy/WhereToBuy.jsx";
 
 import "./GameDetailsPage.css";
+import Loading from "../../components/Loading/Loading.jsx";
 
 const GameDetailsPage = () => {
   const { id } = useParams();
@@ -52,14 +53,16 @@ const GameDetailsPage = () => {
   });
 
   if (isLoadingDetails || isLoadingScreenshots || isLoadingTrailers) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isErrorDetails || isErrorScreenshots || isErrorTrailers || !gameDetails) {
     return <div>Error loading game details</div>;
   }
 
-  const slides = gameTrailers.slice(0, 2).concat(gameScreenshots);
+  const slides = gameTrailers
+    ? gameTrailers.slice(0, 2).concat(gameScreenshots)
+    : null;
 
   const settings = {
     dots: true,

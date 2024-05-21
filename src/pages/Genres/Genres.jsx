@@ -8,12 +8,9 @@ import GenreCard from "../../components/GenreCard/GenreCard.jsx";
 import GameList from "../../components/GamesList/GameList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
 import { useQuery } from "react-query";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const Genres = () => {
   const [selectedGenreId, setSelectedGenreId] = useState(null);
-  const navigate = useNavigate();
-  const location = useLocation();
   const [page, setPage] = useState(1);
   const gamesPerPage = 20;
   const [totalGames, setTotalGames] = useState(0);
@@ -96,14 +93,15 @@ const Genres = () => {
           <div className="genres-flex-container-column">
             <Header />
             <div className="genres-list-row">
-              {genres &&
-                genres.map((genre) => (
-                  <GenreCard
-                    genre={genre}
-                    key={genre.id}
-                    onClick={() => handleGenreClick(genre.id)}
-                  />
-                ))}
+              {genres
+                ? genres?.map((genre) => (
+                    <GenreCard
+                      genre={genre}
+                      key={genre.id}
+                      onClick={() => handleGenreClick(genre.id)}
+                    />
+                  ))
+                : null}
             </div>
             {totalPages > 1 && (
               <Pagination

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { fetchDevelopers } from "../../helpers/api.js";
 import NavBar from "../../components/NavBar/NavBar.jsx";
@@ -6,9 +6,12 @@ import DeveloperBox from "../../components/DeveloperBox/DeveloperBox.jsx";
 import Header from "../../components/Header/Header.jsx";
 import "./Developers.css";
 import Loading from "../../components/Loading/Loading.jsx";
+import Pagination from "../../components/Pagination/Pagination.jsx";
 
 const Developers = () => {
   const [pageUrl, setPageUrl] = useState("https://api.rawg.io/api/developers");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0); // Add this line
 
   const { data, status } = useQuery(
     ["developers", pageUrl],
@@ -19,9 +22,24 @@ const Developers = () => {
     }
   );
 
+  useEffect(() => {
+    if (data?.["count"]) {
+      setTotalPages(Math.ceil(data["count"] / 20)); // Assuming 20 developers per page
+    }
+  }, [data]);
+
   const fetchNextPage = () => {
     if (data?.["next"]) {
       setPageUrl(data["next"]);
+    }
+  };
+
+  const handlePageChange = async (newPage) => {
+    setPage(newPage);
+    if (newPage > page) {
+      fetchNextPage();
+    } else if (newPage < page) {
+      fetchPreviousPage();
     }
   };
 
@@ -53,8 +71,14 @@ const Developers = () => {
             : null}
         </div>
         <div>
-          <button onClick={fetchPreviousPage}>Previous Page</button>
-          <button onClick={fetchNextPage}>Next Page</button>
+          <Pagination
+            currentPage={page}
+            handlePageChange={handlePageChange}
+            totalPages={totalPages}
+          />
+
+          {/*<button onClick={fetchPreviousPage}>Previous Page</button>*/}
+          {/*<button onClick={fetchNextPage}>Next Page</button>*/}
         </div>
       </div>
     </div>

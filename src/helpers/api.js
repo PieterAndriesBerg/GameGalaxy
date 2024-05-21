@@ -353,6 +353,7 @@ export const fetchDevelopers = async (
     const response = await axios.get(nextPageUrl, {
       params: {
         key: process.env.REACT_APP_RAWG_API_KEY,
+        page_size: 20,
       },
       timeout: 5000,
     });

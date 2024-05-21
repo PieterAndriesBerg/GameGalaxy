@@ -1,0 +1,38 @@
+.developers-flex-container {
+    display: flex;
+}
+
+.developers-flex-container-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.developers-flex-container-column h1 {
+    text-align: center;
+    margin: 25px 0 25px 0;
+}
+
+.developers-data-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin: 25px auto 25px 50px;
+}
+
+.developers-flex-container-column div button {
+    margin: 25px 10px 25px 0;
+    padding: 10px;
+    border-radius: 12px;
+    background: #6F2232;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    width: 25rem;
+}
+

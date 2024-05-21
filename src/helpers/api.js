@@ -346,6 +346,24 @@ export const fetchGamesByGenre = async (genreId, page = 1) => {
   }
 };
 
+export const fetchDevelopers = async (
+  nextPageUrl = "https://api.rawg.io/api/developers"
+) => {
+  try {
+    const response = await axios.get(nextPageUrl, {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+      },
+      timeout: 5000,
+    });
+    console.log("DEVELOPERS DATA FETCHED", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching developers:", error);
+    return [];
+  }
+};
+
 // TODO: Get a random game
 
 // TODO: Get a game based on Mood from the user. e.g. (map angry to a genre etc)

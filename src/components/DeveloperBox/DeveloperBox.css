@@ -1,0 +1,22 @@
+.developer-box {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background: #6F2232;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.developer-box:hover {
+    background: #8F2232;
+}
+
+.developer-box ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    font-weight: lighter;
+}
+
+

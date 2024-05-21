@@ -19,4 +19,16 @@
     font-weight: lighter;
 }
 
+.developer-box ul a {
+    cursor: pointer;
+    transition: font-size 0.2s ease-in-out;
+}
+
+.developer-box ul a:hover {
+    text-decoration: underline;
+    font-size: 1.2em;
+}
+
+
+
 

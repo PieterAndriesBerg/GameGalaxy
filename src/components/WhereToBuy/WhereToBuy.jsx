@@ -6,6 +6,7 @@ import NINTENDO from "../../assets/platform-icons/nintendo-switch.svg?react";
 import EPICGAMES from "../../assets/platform-icons/epic-games.svg?react";
 import GOG from "../../assets/platform-icons/gog.svg?react";
 import "./WhereToBuy.css";
+import PropTypes from "prop-types";
 
 const WhereToBuy = ({ store, handleStoreLink }) => {
   const storeLogos = {
@@ -29,6 +30,11 @@ const WhereToBuy = ({ store, handleStoreLink }) => {
       {Logo ? <Logo className="where-to-buy-logo" /> : "No Logo"}
     </div>
   );
+};
+
+WhereToBuy.propTypes = {
+  store: PropTypes.object.isRequired,
+  handleStoreLink: PropTypes.func.isRequired,
 };
 
 export default WhereToBuy;

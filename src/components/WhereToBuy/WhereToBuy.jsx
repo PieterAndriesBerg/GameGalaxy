@@ -26,7 +26,7 @@ const WhereToBuy = ({ store, handleStoreLink }) => {
       onClick={(e) => handleStoreLink(e, store.store.domain)}
     >
       <span>{store?.store.name}</span>
-      <Logo className="where-to-buy-logo" />
+      {Logo ? <Logo className="where-to-buy-logo" /> : "No Logo"}
     </div>
   );
 };

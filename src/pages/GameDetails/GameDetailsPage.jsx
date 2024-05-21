@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import Slider from "react-slick";
 import {
   fetchGameDetails,
   fetchGameScreenshots,
   fetchGameTrailers,
 } from "../../helpers/api.js";
-import "./GameDetailsPage.css";
 import { useQuery } from "react-query";
 import Header from "../../components/Header/Header.jsx";
 import NavBar from "../../components/NavBar/NavBar.jsx";
-import Slider from "react-slick";
+
 import WhereToBuy from "../../components/WhereToBuy/WhereToBuy.jsx";
+
+import "./GameDetailsPage.css";
 
 const GameDetailsPage = () => {
   const { id } = useParams();

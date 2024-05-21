@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import {
   fetchGameDetails,
@@ -16,7 +16,6 @@ import "./GameDetailsPage.css";
 
 const GameDetailsPage = () => {
   const { id } = useParams();
-  const location = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const {
@@ -52,13 +51,11 @@ const GameDetailsPage = () => {
     cacheTime: 1000 * 60 * 60 * 5,
   });
 
-  const game = location.state?.game;
-
-  if (isLoadingDetails || isLoadingScreenshots) {
+  if (isLoadingDetails || isLoadingScreenshots || isLoadingTrailers) {
     return <div>Loading...</div>;
   }
 
-  if (isErrorDetails || isErrorScreenshots || !gameDetails) {
+  if (isErrorDetails || isErrorScreenshots || isErrorTrailers || !gameDetails) {
     return <div>Error loading game details</div>;
   }
 

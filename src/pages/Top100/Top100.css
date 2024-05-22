@@ -1,0 +1,29 @@
+.top100-flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.top100-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.top100-games-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.top100-gamecard-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 800px;
+    gap: 25px;
+}
+
+

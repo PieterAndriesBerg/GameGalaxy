@@ -268,6 +268,30 @@ export const fetchDevelopers = async (
   }
 };
 
+export const fetchTop100GamesOfThisYear = async () => {
+  const currentYear = new Date().getFullYear();
+  try {
+    const response = await axios.get("https://api.rawg.io/api/games", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        ordering: "-rating",
+        dates: `${currentYear}-01-01,${currentYear}-12-31`,
+        page_size: 100,
+      },
+    });
+
+    // API does not return metacritic on every game so it does not really work as expected.
+    const games = response.data.results;
+
+    games.sort((a, b) => b.metacritic - a.metacritic);
+    console.log("TOP 100 GAMES OF THIS YEAR FETCHED", games);
+    return games;
+  } catch (error) {
+    console.error("Error fetching top 100 games of this year:", error);
+    return [];
+  }
+};
+
 // TODO: Get a random game
 
 // TODO: Get a game based on Mood from the user. e.g. (map angry to a genre etc)

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import "./DeveloperBox.css";
@@ -22,10 +21,6 @@ const DeveloperBox = ({ developer }) => {
       </ul>
     </div>
   );
-};
-
-DeveloperBox.propTypes = {
-  developer: PropTypes.object.isRequired,
 };
 
 export default DeveloperBox;

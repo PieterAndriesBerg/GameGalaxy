@@ -30,9 +30,13 @@ const Top100 = () => {
         <div className="top100-games-container">
           <h1>Welcome to the Top 100</h1>
           <div className="top100-gamecard-container">
-            {games.map((game) => (
-              <GameCard key={game.id} game={game} id="top100-gamecard" />
-            ))}
+            <ol>
+              {games.map((game) => (
+                <li>
+                  <GameCard key={game.id} game={game} id="top100-gamecard" />
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>

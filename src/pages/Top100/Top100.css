@@ -16,7 +16,7 @@
     gap: 25px;
 }
 
-.top100-gamecard-container {
+.top100-gamecard-container ol {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -25,5 +25,11 @@
     width: 800px;
     gap: 25px;
 }
+
+.top100-gamecard-container ol li {
+    list-style-type: normal;
+    font-size: 2em;
+}
+
 
 

@@ -270,22 +270,27 @@ export const fetchDevelopers = async (
 
 export const fetchTop100GamesOfThisYear = async () => {
   const currentYear = new Date().getFullYear();
+  let games = [];
   try {
-    const response = await axios.get("https://api.rawg.io/api/games", {
-      params: {
-        key: process.env.REACT_APP_RAWG_API_KEY,
-        ordering: "-rating",
-        dates: `${currentYear}-01-01,${currentYear}-12-31`,
-        page_size: 100,
-      },
-    });
+    for (let page = 1; page <= 3; page++) {
+      const response = await axios.get("https://api.rawg.io/api/games", {
+        params: {
+          key: process.env.REACT_APP_RAWG_API_KEY,
+          ordering: "-rating",
+          dates: `${currentYear}-01-01,${currentYear}-12-31`,
+          page_size: 40,
+          page: page,
+        },
+      });
+
+      games = [...games, ...response.data.results];
+    }
 
     // API does not return metacritic on every game so it does not really work as expected.
-    const games = response.data.results;
 
     games.sort((a, b) => b.metacritic - a.metacritic);
-    console.log("TOP 100 GAMES OF THIS YEAR FETCHED", games);
-    return games;
+    console.log("TOP 100 GAMES OF THIS YEAR FETCHED", games.slice(0, 100));
+    return games.slice(0, 100);
   } catch (error) {
     console.error("Error fetching top 100 games of this year:", error);
     return [];

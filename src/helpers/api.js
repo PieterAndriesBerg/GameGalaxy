@@ -274,10 +274,6 @@ export const fetchGameOfTheDay = async () => {
 
     console.log("API GOTD", response.data.results);
 
-    if (response.data.results.length === 0) {
-      throw new Error("No games found");
-    }
-
     // Filter out games that have no rating
     const gamesWithRating = response.data.results.filter(
       (game) => game["rating"] !== null && game["rating"] !== 0

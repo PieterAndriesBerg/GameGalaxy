@@ -49,28 +49,6 @@ export const fetchNewReleases = () => {
   };
 };
 
-// export const fetchGameDetails = (id) => {
-//   return async () => {
-//     if (!id) {
-//       console.error("Error: id is null or undefined");
-//       return null;
-//     }
-//
-//     try {
-//       const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
-//         params: {
-//           key: process.env.REACT_APP_RAWG_API_KEY,
-//         },
-//       });
-//
-//       const data = await response.data;
-//       console.log("GAME DETAILS FETCHED", data);
-//       return data;
-//     } catch (error) {
-//       console.error("Error fetching game details:", error);
-//     }
-//   };
-// };
 export const fetchGameDetails = async (id) => {
   try {
     const response = await axios.get(`https://api.rawg.io/api/games/${id}`, {
@@ -184,71 +162,6 @@ export const fetchUpcomingGames = () => {
     }
   };
 };
-
-// export const fetchGameOfTheDay = () => {
-//   return async () => {
-//     try {
-//       const currentDate = new Date(); // get current date as a Date object
-//       const currentDateFormatted = currentDate.toISOString().split("T")[0]; // get current date in YYYY-MM-DD format
-//
-//       // If we don't have a game of the day for the current date, fetch a new one
-//       const oneMonthAgo = new Date();
-//       oneMonthAgo.setMonth(currentDate.getMonth() - 1);
-//
-//       const dateRange = `${
-//         oneMonthAgo.toISOString().split("T")[0]
-//       },${currentDateFormatted}`;
-//
-//       const response = await axios.get("https://api.rawg.io/api/games", {
-//         params: {
-//           key: process.env.REACT_APP_RAWG_API_KEY,
-//           ordering: "-rating",
-//           dates: dateRange, // Fetch games released within the last month
-//           page_size: 50,
-//         },
-//       });
-//
-//       console.log("API GOTD", response.data.results);
-//
-//       if (response.data.results.length === 0) {
-//         throw new Error("No games found");
-//       }
-//
-//       // Filter out games that have no rating
-//       const gamesWithRating = response.data.results.filter(
-//         (game) => game["rating"] !== null && game["rating"] !== 0
-//       );
-//
-//       // Check if gamesWithRating is empty
-//       if (gamesWithRating.length === 0) {
-//         throw new Error("No games with rating found");
-//         return null;
-//       }
-//
-//       console.log("GAMES WITH RATING", gamesWithRating);
-//
-//       // Generate a random index
-//       const randomIndex = Math.floor(Math.random() * gamesWithRating.length);
-//
-//       // Fetch the game details
-//       const gameDetails = await fetchGameDetails(
-//         gamesWithRating[randomIndex].id
-//       )();
-//
-//       // Store the game of the day and the date it was fetched in local storage
-//       localStorage.setItem("gameOfTheDay", JSON.stringify(gameDetails));
-//       localStorage.setItem("gameOfTheDayDate", currentDateFormatted); // Store the date as a string
-//
-//       // Return the game details
-//       console.log("GOTD", gameDetails);
-//       return gameDetails;
-//     } catch (error) {
-//       console.error("Error fetching game of the day: ", error);
-//       console.error("Error Details: ", error.response.data);
-//       return null;
-//     }
-//   };
-// };
 
 export const fetchGameOfTheDay = async () => {
   try {

@@ -283,12 +283,6 @@ export const fetchGameOfTheDay = async () => {
       (game) => game["rating"] !== null && game["rating"] !== 0
     );
 
-    // Check if gamesWithRating is empty
-    if (gamesWithRating.length === 0) {
-      throw new Error("No games with rating found");
-      return null;
-    }
-
     console.log("GAMES WITH RATING", gamesWithRating);
 
     // Generate a random index

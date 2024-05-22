@@ -18,7 +18,6 @@ const Genres = () => {
   // Fetch Genre Cards
   const {
     isLoading,
-    isError,
     isFetching: isFetchingGenres,
     isStale: isStaleGenres,
     data: genres,

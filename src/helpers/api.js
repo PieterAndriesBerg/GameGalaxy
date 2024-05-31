@@ -278,7 +278,7 @@ export const fetchTop100GamesOfThisYear = async () => {
           key: process.env.REACT_APP_RAWG_API_KEY,
           ordering: "-rating",
           dates: `${currentYear}-01-01,${currentYear}-12-31`,
-          page_size: 40,
+          page_size: 50,
           page: page,
         },
       });
@@ -297,7 +297,57 @@ export const fetchTop100GamesOfThisYear = async () => {
   }
 };
 
-// TODO: Get a random game
+export const fetchPlatforms = async () => {
+  try {
+    const response = await axios.get("https://api.rawg.io/api/platforms", {
+      params: {
+        key: process.env.REACT_APP_RAWG_API_KEY,
+      },
+    });
+    console.log("PLATFORMS FETCHED", response.data.results);
+    return response.data.results;
+  } catch (error) {
+    console.error("Error fetching platforms:", error);
+    return [];
+  }
+};
+
+export const fetchRandomGame = async ({ platformId, genreId, developerId }) => {
+  try {
+    console.log(
+      `Fetching games for Platform ID: ${platformId} and Genre ID: ${genreId}`
+    );
+
+    const response = await axios.get("https://api.rawg.io/api/games", {
+      params: {
+        platforms: platformId,
+        genres: genreId,
+        developers: developerId,
+        key: process.env.REACT_APP_RAWG_API_KEY,
+        page_size: 50,
+      },
+    });
+
+    let games = response.data.results;
+
+    console.log("Initial games fetched:", games.length);
+    console.log("Initial games data:", JSON.stringify(games, null, 2));
+
+    if (games.length === 0) {
+      console.log("No games found that match the selected platform and genre");
+      return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * games.length);
+    const randomGame = games[randomIndex];
+
+    console.log("Random game fetched:", randomGame);
+    return randomGame;
+  } catch (error) {
+    console.error("Error fetching random game:", error);
+    return null;
+  }
+};
 
 // TODO: Get a game based on Mood from the user. e.g. (map angry to a genre etc)
 

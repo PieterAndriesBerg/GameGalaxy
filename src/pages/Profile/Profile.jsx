@@ -54,7 +54,6 @@ const Profile = () => {
               <h2>User Info:</h2>
               <p>Username: {userInfo.username}</p>
               <p>Email: {userInfo.email}</p>
-              <p>Info: {userInfo.info}</p>
             </div>
           )}
           <div className="favorite-games-container">

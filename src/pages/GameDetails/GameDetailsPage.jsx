@@ -14,6 +14,7 @@ import WhereToBuy from "../../components/WhereToBuy/WhereToBuy.jsx";
 
 import "./GameDetailsPage.css";
 import Loading from "../../components/Loading/Loading.jsx";
+import FavoriteIcon from "../../components/FavoriteIcon/FavoriteIcon.jsx";
 
 const GameDetailsPage = () => {
   const { id } = useParams();
@@ -101,7 +102,10 @@ const GameDetailsPage = () => {
         <Header />
         <div className="container-full-game-details-row">
           <div className="container-full-game-details">
-            <h1 className="game-title">{gameDetails.name}</h1>
+            <h1 className="game-title">
+              {gameDetails.name}
+              <FavoriteIcon gameId={gameDetails.id} iconSize="2x" />
+            </h1>
             <h2>About</h2>
             <p className="game-description_raw">
               {gameDetails["description_raw"]}

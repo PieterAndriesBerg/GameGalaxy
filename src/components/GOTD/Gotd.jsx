@@ -5,6 +5,7 @@ import { formatGenres } from "../../helpers/formatGenresHelper.js";
 import StarRating from "../StarRating/StarRating.jsx";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading.jsx";
+import FavoriteIcon from "../FavoriteIcon/FavoriteIcon.jsx";
 
 const Gotd = ({ game }) => {
   console.log("GOTD", game);
@@ -14,20 +15,25 @@ const Gotd = ({ game }) => {
   }
 
   return (
-    <Link to={`/games/${game.id}`} className="gotd-container">
+    <div className="gotd-container">
       <div className="gotd-image-container">
         <img
           src={game["background_image"]}
           alt={game.name}
           className="gotd-image"
         />
+        <div className="favorite-icon-container">
+          <FavoriteIcon gameId={game.id} iconSize="3x" />
+        </div>
       </div>
       <div className="gotd-container-info">
         <span className="gotd-info-platforms">
           {getPlatformIcon(game["platforms"])}
         </span>
-        <h2>{game.name}</h2>
-        <p className="gotd-description">{game["description_raw"]}</p>
+        <Link to={{ pathname: `/games/${game.id}`, state: { game } }}>
+          <h2>{game.name}</h2>
+          <p className="gotd-description">{game["description_raw"]}</p>
+        </Link>
         <div className="gotd-ratings">
           {game["ratings"] && game["ratings"].length > 0 && (
             <div>
@@ -56,7 +62,7 @@ const Gotd = ({ game }) => {
           </span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

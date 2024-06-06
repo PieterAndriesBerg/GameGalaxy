@@ -48,7 +48,7 @@ const GameCard = ({ game, className }) => {
       <div className="gamecard-img-container">
         <img src={game["background_image"]} alt={game.name} />
         <div className="heart-icon-container">
-          <FavoriteIcon gameId={game.id} />
+          <FavoriteIcon gameId={game.id} iconSize="3x" />
         </div>
       </div>
     </div>

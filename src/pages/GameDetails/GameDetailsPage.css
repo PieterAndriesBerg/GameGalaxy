@@ -88,6 +88,19 @@
     margin-bottom: 40px;
 }
 
+.favorite-icon-container {
+    display: inline-block;
+    margin: auto 0;
+}
+
+.game-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+    font-size: 1rem;
+    width: 100%;
+}
+
 .where-to-buy-row {
     display: flex;
     flex-direction: row;

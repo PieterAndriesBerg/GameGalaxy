@@ -6,13 +6,21 @@
     width: 40vw;
 }
 
-.gotd-container:hover {
+.gotd-description:hover {
     cursor: pointer;
 }
 
 .gotd-image-container {
+    position: relative;
     width: 35%;
     height: 100%;
+    color: gold;
+}
+
+.favorite-icon-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .gotd-image {

@@ -1,43 +1,21 @@
 import { useMutation } from "react-query";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { isTokenExpired } from "../helpers/tokenUtils.js";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [logoutTimer, setLogoutTimer] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token && !isTokenExpired(token)) {
-      setUser({ token }); // set user with token if it exists in localStorage and is not expired
-      setLogoutTimer(setTimeout(logout, 15 * 60 * 1000)); // start the logout timer when the user logs in
-    } else {
-      setUser(null); // set user to null if token does not exist or is expired
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUser({ token, username: decodedToken.sub });
     }
-
-    const resetLogoutTimer = () => {
-      if (logoutTimer) {
-        clearTimeout(logoutTimer); // clear the logout timer when the user logs in
-        setLogoutTimer(setTimeout(logout, 15 * 60 * 1000));
-      }
-    };
-
-    // Add event listeners to reset the logout timer when the user interacts with the page
-    window.addEventListener("click", resetLogoutTimer);
-    window.addEventListener("keypress", resetLogoutTimer);
-    window.addEventListener("scroll", resetLogoutTimer);
-    window.addEventListener("mousemove", resetLogoutTimer);
-
-    return () => {
-      // cleanup
-      window.removeEventListener("click", resetLogoutTimer);
-      window.removeEventListener("keypress", resetLogoutTimer);
-      window.removeEventListener("scroll", resetLogoutTimer);
-      window.removeEventListener("mousemove", resetLogoutTimer);
-    };
+    setLoading(false);
   }, []);
 
   const loginMutation = useMutation(
@@ -59,9 +37,9 @@ export const AuthProvider = ({ children }) => {
     },
     {
       onSuccess: (data) => {
-        console.log("token data:", data.jwt);
-        localStorage.setItem("token", data.jwt); // save token to localStorage
-        setUser({ token: data.jwt }); // call setUser directly here
+        localStorage.setItem("token", data.jwt);
+        const decodedToken = jwtDecode(data.jwt);
+        setUser({ token: data.jwt, username: decodedToken.sub });
       },
       onError: (error) => {
         console.error("Error logging in: ", error);
@@ -91,9 +69,9 @@ export const AuthProvider = ({ children }) => {
     },
     {
       onSuccess: (data) => {
-        console.log("Registration successful", data);
-        localStorage.setItem("token", data.jwt); // save token to localStorage
-        setUser({ token: data.jwt }); // call setUser directly here
+        localStorage.setItem("token", data.jwt);
+        const decodedToken = jwtDecode(data.jwt);
+        setUser({ token: data.jwt, username: decodedToken.sub });
       },
       onError: (error) => {
         console.error("Registration failed", error);
@@ -102,17 +80,15 @@ export const AuthProvider = ({ children }) => {
   );
 
   const logout = () => {
-    localStorage.removeItem("token"); // remove token from localStorage
+    localStorage.removeItem("token");
     setUser(null);
-    if (logoutTimer) {
-      clearTimeout(logoutTimer); // clear the logout timer when the user logs out
-    }
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        loading,
         login: loginMutation.mutate,
         register: registerMutation.mutate,
         logout,

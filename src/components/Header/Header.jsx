@@ -29,7 +29,7 @@ const Header = () => {
       console.error("Invalid token:", user ? user.token : "No user logged in?");
       // handle invalid token here
     }
-  }, [user]);
+  }, [user?.token]);
 
   return (
     <header className="header">

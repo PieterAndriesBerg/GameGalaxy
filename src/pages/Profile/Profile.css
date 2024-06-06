@@ -1,0 +1,18 @@
+.profile-flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-flex-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.profile-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}

@@ -15,6 +15,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { AuthProvider } from "./context/AuthProvider.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Login from "./pages/Login/Login.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -68,6 +69,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/profile/:username",
+    element: <Profile />,
     errorElement: <ErrorPage />,
   },
 ]);

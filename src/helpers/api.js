@@ -349,6 +349,20 @@ export const fetchRandomGame = async ({ platformId, genreId, developerId }) => {
   }
 };
 
+export const fetchUserInfo = async (username, token) => {
+  const response = await axios.get(
+    `https://api.datavortex.nl/movielux/users/${username}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": "movielux:itycrNMvSKgvPssF1iZE",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
 // TODO: Get a game based on Mood from the user. e.g. (map angry to a genre etc)
 
 //TODO: Get games based on search value (e.g. user searches for "Batman" fetch everything with batman in its name)

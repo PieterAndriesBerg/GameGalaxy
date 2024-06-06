@@ -18,6 +18,16 @@ const NavBar = () => {
     <nav className="navbar">
       <ul className="flex-container-nav">
         <div className="navlinks-center">
+          {user && (
+            <NavLink
+              to={`/profile/${user.username}`}
+              className={({ isActive }) =>
+                isActive ? "active-menu-link" : "default-menu-link"
+              }
+            >
+              Profile
+            </NavLink>
+          )}
           <NavLink
             to="/"
             className={({ isActive }) =>

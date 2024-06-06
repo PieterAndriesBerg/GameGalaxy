@@ -1,42 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider.jsx";
-import axios from "axios";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Header from "../../components/Header/Header.jsx";
-
+import GameCard from "../../components/GameCard/GameCard.jsx"; // Import GameCard
 import "./Profile.css";
+import { fetchGameDetails, fetchUserInfo } from "../../helpers/api.js"; // Import fetchGameDetails
 
 const Profile = () => {
   const { username } = useParams();
-  const { logout, user, loading } = useAuth();
-  const [likedGames, setLikedGames] = useState([]);
-  const [userInfo, setUserInfo] = useState(null);
-  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const { data: userInfo, isLoading: userInfoLoading } = useQuery(
+    ["userInfo", username, user?.token],
+    () => fetchUserInfo(username, user?.token),
+    {
+      enabled: !!user,
+    }
+  );
 
   useEffect(() => {
-    if (!loading && user) {
-      console.log("from profile", user);
-      // Fetch user info
-      axios
-        .get(`https://api.datavortex.nl/movielux/users/${username}`, {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Api-Key": "movielux:itycrNMvSKgvPssF1iZE",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        .then((response) => {
-          setUserInfo(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user info: ", error);
-        });
+    if (user) {
+      console.log(userInfo);
     }
-  }, [loading, user]);
+  }, []);
 
-  if (loading || !user || user.username !== username) {
-    return null; // Don't render anything if user is not logged in
+  const [likedGames, setLikedGames] = useState([]);
+
+  useEffect(() => {
+    if (userInfo?.info) {
+      const gameIds = userInfo.info.split(",");
+      gameIds.forEach(async (gameId) => {
+        const game = await fetchGameDetails(gameId);
+        setLikedGames((prevGames) => [...prevGames, game]);
+      });
+    }
+  }, [userInfo]);
+
+  if (userInfoLoading || !user || user.username !== username) {
+    return null; // Don't render anything if user is not logged in or data is loading
   }
 
   return (
@@ -54,6 +57,12 @@ const Profile = () => {
               <p>Info: {userInfo.info}</p>
             </div>
           )}
+          <div className="favorite-games-container">
+            <h2>Favorite Games:</h2>
+            {likedGames.map((game) => (
+              <GameCard key={game.id} game={game} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

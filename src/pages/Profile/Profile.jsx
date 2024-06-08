@@ -31,10 +31,13 @@ const Profile = () => {
   useEffect(() => {
     if (userInfo?.info) {
       const gameIds = userInfo.info.split(",");
-      gameIds.forEach(async (gameId) => {
-        const game = await fetchGameDetails(gameId);
-        setLikedGames((prevGames) => [...prevGames, game]);
-      });
+      const fetchAllGameDetails = async () => {
+        const games = await Promise.all(
+          gameIds.map((id) => fetchGameDetails(id))
+        );
+        setLikedGames(games);
+      };
+      void fetchAllGameDetails();
     }
   }, [userInfo]);
 

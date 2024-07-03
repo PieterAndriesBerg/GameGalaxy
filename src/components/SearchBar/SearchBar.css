@@ -1,0 +1,27 @@
+.searchBar-container {
+    position: relative;
+}
+
+
+.suggestions {
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    width: calc(100% - 20px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 4px 4px;
+    margin-top: 5px;
+    overflow: hidden;
+    color: black;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestions li:hover {
+    background-color: #f0f0f0;
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./SearchBar.css";
 import { fetchGamesByName } from "../../helpers/api.js";
@@ -7,6 +8,7 @@ const SearchBar = () => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const navigate = useNavigate(); // Use the useHistory hook for navigation
 
   const debounce = (func, delay) => {
     let debounceTimer;
@@ -34,12 +36,20 @@ const SearchBar = () => {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    setSearch(suggestion);
+    setSearch(suggestion.name);
+    console.log(suggestion.id);
+    navigate(`/games/${suggestion.id}`);
     setSuggestions([]);
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && suggestions.length > 0) {
+      navigate(`/games/${suggestions[0].id}`);
+    }
+  };
+
   return (
-    <div>
+    <div className="searchBar-container">
       <input
         type="text"
         placeholder="Search for a game..."
@@ -50,10 +60,7 @@ const SearchBar = () => {
       {suggestions.length > 0 && (
         <ul className="suggestions">
           {suggestions.map((suggestion, index) => (
-            <li
-              key={index}
-              onClick={() => handleSuggestionClick(suggestion.name)}
-            >
+            <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
               {suggestion.name}
             </li>
           ))}

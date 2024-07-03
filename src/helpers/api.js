@@ -350,6 +350,16 @@ export const fetchRandomGame = async ({ platformId, genreId, developerId }) => {
   }
 };
 
+export const fetchGamesByName = async (name) => {
+  const response = await axios.get("https://api.rawg.io/api/games", {
+    params: {
+      key: process.env.REACT_APP_RAWG_API_KEY,
+      search: name,
+    },
+  });
+  return response.data.results;
+};
+
 export const fetchUserInfo = async (username, token) => {
   const response = await axios.get(
     `https://api.datavortex.nl/movielux/users/${username}`,

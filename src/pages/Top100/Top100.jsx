@@ -4,9 +4,9 @@ import "../general-page-style.css";
 import { fetchTop100GamesOfThisYear } from "../../helpers/api.js";
 import { useQuery } from "react-query";
 import GameCard from "../../components/GameCard/GameCard.jsx";
-
-import "./Top100.css";
 import Header from "../../components/Header/Header.jsx";
+import Loading from "../../components/Loading/Loading.jsx";
+import "./Top100.css";
 
 const Top100 = () => {
   const { data: games, status } = useQuery(
@@ -15,7 +15,7 @@ const Top100 = () => {
   );
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (status === "error") {

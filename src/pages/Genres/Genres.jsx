@@ -46,6 +46,7 @@ const Genres = () => {
   };
 
   const handleGenreClick = async (genreId) => {
+    console.log(genreId);
     setSelectedGenreId(genreId);
   };
 
